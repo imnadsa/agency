@@ -95,7 +95,7 @@ export default function Header() {
             </ul>
             <Link
               href="#contact"
-              className="hidden md:flex ml-8 bg-[#F47458] text-white font-medium text-lg rounded-xl px-10 py-4"
+              className="hidden md:flex ml-8 bg-[#6812F3] text-white font-medium text-lg rounded-xl px-10 py-4"
             >
               Заказать звонок
             </Link>
@@ -156,7 +156,7 @@ export default function Header() {
         <Link
           href="#contact"
           onClick={closeMobileMenu}
-          className="mt-8 w-full bg-[#F47458] text-white font-medium text-lg rounded-xl px-10 py-4 text-center block"
+          className="mt-8 w-full bg-[#6812F3] text-white font-medium text-lg rounded-xl px-10 py-4 text-center block"
         >
           Заказать звонок
         </Link>
