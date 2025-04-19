@@ -55,7 +55,7 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
         dark: "#0A0E17",
-        coral: "#F47458",
+        coral: "#6812F3",
       },
       borderRadius: {
         lg: "var(--radius)",
