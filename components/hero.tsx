@@ -27,7 +27,10 @@ export default function Hero() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               Digital-решения{" "}
               <span className="relative inline-block">
-                <span className="relative z-10 inline-block whitespace-nowrap px-4 py-1 bg-[#6812F3] text-white rounded-full transform -rotate-2">
+                <span 
+                  style={{ backgroundColor: '#6812F3' }} 
+                  className="relative z-10 inline-block whitespace-nowrap px-4 py-1 text-white rounded-full transform -rotate-2"
+                >
                   в медицине:
                 </span>
               </span>
@@ -42,7 +45,8 @@ export default function Hero() {
             <div className="mt-8">
               <Link
                 href="#contact"
-                className="inline-block bg-[#6812F3] text-white font-medium text-lg rounded-xl px-10 py-4"
+                style={{ backgroundColor: '#6812F3' }}
+                className="inline-block text-white font-medium text-lg rounded-xl px-10 py-4"
               >
                 обсудить проект
               </Link>
