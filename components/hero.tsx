@@ -27,7 +27,7 @@ export default function Hero() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               Digital-решения{" "}
               <span className="relative inline-block">
-                <span className="relative z-10 inline-block whitespace-nowrap px-4 py-1 bg-[#F47458] text-white rounded-full transform -rotate-2">
+                <span className="relative z-10 inline-block whitespace-nowrap px-4 py-1 bg-[#6812F3] text-white rounded-full transform -rotate-2">
                   в медицине:
                 </span>
               </span>
