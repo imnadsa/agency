@@ -28,8 +28,7 @@ export default function Hero() {
               Digital-решения{" "}
               <span className="relative inline-block">
                 <span 
-                  style={{ backgroundColor: '#6812F3' }} 
-                  className="relative z-10 inline-block whitespace-nowrap px-4 py-1 text-white rounded-full transform -rotate-2"
+                  className="relative z-10 inline-block whitespace-nowrap px-4 py-1 text-white rounded-full transform -rotate-2 bg-[#6812F3]"
                 >
                   в медицине:
                 </span>
@@ -45,8 +44,7 @@ export default function Hero() {
             <div className="mt-8">
               <Link
                 href="#contact"
-                style={{ backgroundColor: '#6812F3' }}
-                className="inline-block text-white font-medium text-lg rounded-xl px-10 py-4"
+                className="inline-block text-white font-medium text-lg rounded-xl px-10 py-4 bg-[#6812F3]"
               >
                 обсудить проект
               </Link>
