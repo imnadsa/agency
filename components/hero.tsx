@@ -40,7 +40,7 @@ export default function Hero() {
             <div className="mt-8">
               <Link
                 href="#contact"
-                className="inline-block text-white font-medium text-3xl rounded-xl px-20 py-8 bg-[#6812F3]"
+                className="inline-block text-white font-medium text-base sm:text-xl md:text-2xl lg:text-3xl rounded-xl px-6 sm:px-10 md:px-16 lg:px-20 py-3 sm:py-4 md:py-6 lg:py-8 bg-[#6812F3]"
               >
                 обсудить проект
               </Link>
