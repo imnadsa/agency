@@ -86,6 +86,12 @@ const config = {
           "radial-gradient(circle at 10% 20%, rgba(120, 50, 255, 0.2), transparent 40%), radial-gradient(circle at 80% 70%, rgba(0, 200, 255, 0.1), transparent 50%)",
         "gradient-primary": "linear-gradient(90deg, #7832FF, #00C8FF)",
       },
+      // Добавляем пользовательский класс для кнопки "обсудить проект"
+      fontSize: {
+        'hero-button': ['1rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
+        'hero-button-md': ['1.25rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
+        'hero-button-lg': ['1.5rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
