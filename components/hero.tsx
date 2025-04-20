@@ -44,7 +44,7 @@ export default function Hero() {
             <div className="mt-8">
               <Link
                 href="#contact"
-                className="inline-block text-white font-medium text-lg rounded-xl px-10 py-4 bg-[#6812F3]"
+                className="inline-block text-white font-medium text-3xl rounded-xl px-20 py-8 bg-[#6812F3]"
               >
                 обсудить проект
               </Link>
@@ -59,14 +59,3 @@ export default function Hero() {
         <div className="absolute w-[200px] h-[200px] bottom-[15%] right-[-100px] bg-primary opacity-10 rounded-[20%]"></div>
         <div className="absolute w-[150px] h-[150px] bottom-[-75px] left-[30%] bg-primary opacity-10 rounded-[20%]"></div>
       </div>
-
-      {/* Стрелка к разделу услуг */}
-      <div className="relative mt-32 max-w-4xl mx-auto px-4">
-        <h2 className="text-4xl font-bold mb-8 inline-block relative">
-          Наши услуги
-          <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-primary"></span>
-        </h2>
-      </div>
-    </section>
-  )
-}
