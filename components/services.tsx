@@ -26,7 +26,7 @@ function ServiceCard({ icon, title, description, index, logos, features }: Servi
     <div
       ref={ref}
       className={cn(
-        "bg-white text-dark border border-white/10 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl relative overflow-hidden group",
+        "bg-secondary border border-white/10 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl relative overflow-hidden group",
         inView ? "animate-fade-in" : "opacity-0 translate-y-5",
       )}
       style={{ animationDelay: `${index * 0.2}s` }}
@@ -35,7 +35,7 @@ function ServiceCard({ icon, title, description, index, logos, features }: Servi
     >
       {/* Градиентный фон при наведении */}
       <div className={cn(
-        "absolute inset-0 bg-gradient-to-br from-[#7832FF]/5 to-[#00C8FF]/5 opacity-0 transition-opacity duration-300",
+        "absolute inset-0 bg-gradient-to-br from-primary/10 to-accent-cyan/10 opacity-0 transition-opacity duration-300",
         isHovered && "opacity-100"
       )} />
       
@@ -43,18 +43,18 @@ function ServiceCard({ icon, title, description, index, logos, features }: Servi
       <div className="relative z-10">
         <div className="flex justify-between items-start">
           <div className="flex-1">
-            <h3 className="text-2xl font-bold mb-4 text-dark group-hover:text-[#6812F3] transition-colors">
+            <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-[#6812F3] transition-colors">
               {title}
             </h3>
-            <p className="text-dark/80 mb-6 leading-relaxed">{description}</p>
+            <p className="text-white/80 mb-6 leading-relaxed">{description}</p>
             
             {/* Список возможностей */}
             {features && features.length > 0 && (
               <ul className="space-y-2 mb-6">
                 {features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <span className="text-[#6812F3] mt-1 flex-shrink-0">✓</span>
-                    <span className="text-dark/70">{feature}</span>
+                    <span className="text-accent-cyan mt-1 flex-shrink-0">✓</span>
+                    <span className="text-white/70">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -69,7 +69,7 @@ function ServiceCard({ icon, title, description, index, logos, features }: Servi
             
             {/* CTA */}
             <div className={cn(
-              "mt-6 inline-flex items-center text-sm font-medium text-[#6812F3] opacity-0 transform translate-x-[-10px] transition-all duration-300",
+              "mt-6 inline-flex items-center text-sm font-medium text-accent-cyan opacity-0 transform translate-x-[-10px] transition-all duration-300",
               isHovered && "opacity-100 translate-x-0"
             )}>
               Подробнее <ArrowRight className="ml-1 w-4 h-4" />
@@ -78,7 +78,7 @@ function ServiceCard({ icon, title, description, index, logos, features }: Servi
           
           {icon && (
             <div className={cn(
-              "text-4xl bg-[#6812F3]/10 p-4 rounded-xl text-[#6812F3] transition-transform duration-300",
+              "text-4xl bg-primary/20 p-4 rounded-xl text-accent-cyan transition-transform duration-300",
               isHovered && "scale-110 rotate-3"
             )}>
               {icon}
@@ -207,16 +207,16 @@ export default function Services() {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
             )}
           >
-            Комплексные <span className="text-[#6812F3]">digital-решения</span> для медицинских клиник
+            Комплексные <span className="text-primary">digital-решения</span> для медицинских клиник
           </h2>
-          <p className="text-dark/80">
+          <p className="text-white/80">
             Мы предлагаем полный спектр digital-услуг, специально адаптированных для медицинской отрасли
           </p>
         </div>
 
         {/* Декоративные элементы */}
-        <div className="absolute top-1/4 left-0 w-64 h-64 bg-[#6812F3]/5 rounded-full filter blur-3xl opacity-70 -z-10"></div>
-        <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-[#00C8FF]/5 rounded-full filter blur-3xl opacity-70 -z-10"></div>
+        <div className="absolute top-1/4 left-0 w-64 h-64 bg-primary/10 rounded-full filter blur-3xl opacity-70 -z-10"></div>
+        <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-accent-cyan/10 rounded-full filter blur-3xl opacity-70 -z-10"></div>
 
         {/* Основной блок */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -248,7 +248,7 @@ export default function Services() {
         <div className="mt-12 text-center">
           <a
             href="#contact"
-            className="inline-block text-white font-medium text-lg rounded-xl px-10 py-4 bg-[#6812F3] hover:bg-[#5f10e0] transition-colors duration-300 shadow-lg hover:shadow-[#6812F3]/20"
+            className="inline-block text-white font-medium text-lg rounded-xl px-10 py-4 bg-primary hover:bg-primary/90 transition-colors duration-300 shadow-lg hover:shadow-primary/20"
           >
             Обсудить ваш проект
           </a>
