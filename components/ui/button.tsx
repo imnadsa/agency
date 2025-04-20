@@ -18,10 +18,11 @@ const buttonVariants = cva(
         coral: "bg-[#6812F3] hover:bg-[#E05A3D] text-white",
       },
       size: {
-        default: "h-10 px-4 py-2",
+        default: "h-14 px-6 py-3 text-base",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         xl: "h-14 rounded-md px-10 text-lg",
+        xxl: "h-20 rounded-md px-16 py-6 text-xl",
         icon: "h-10 w-10",
       },
     },
