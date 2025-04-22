@@ -35,7 +35,7 @@ export default function AuditSection() {
     <section id="audit" className="py-24 relative overflow-hidden" ref={ref}>
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className={cn("transition-all duration-700", inView ? "opacity-100" : "opacity-0 translate-x-[-50px]")}>
+          <div className={cn("transition-opacity transition-transform duration-500", inView ? "opacity-100" : "opacity-0 translate-x-[-50px]")} style={{ willChange: "transform, opacity" }}>
             <span className="section-title-tag">Бесплатный аудит</span>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
               Получите <span className="text-primary">бесплатный аудит</span> вашего digital-присутствия
@@ -50,10 +50,10 @@ export default function AuditSection() {
                 <li
                   key={index}
                   className={cn(
-                    "flex items-start gap-3 transition-all",
-                    inView ? "animate-fade-in" : "opacity-0 translate-y-5",
+                    "flex items-start gap-3 transition-opacity transition-transform duration-300",
+                    inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5",
                   )}
-                  style={{ animationDelay: `${index * 0.2}s` }}
+                  style={{ transitionDelay: `${Math.min(index * 100, 400)}ms`, willChange: "transform, opacity" }}
                 >
                   <CheckCircle2 className="h-6 w-6 text-accent-cyan flex-shrink-0 mt-0.5" />
                   <span className="text-white">{benefit}</span>
@@ -64,9 +64,10 @@ export default function AuditSection() {
 
           <div
             className={cn(
-              "bg-secondary rounded-2xl p-8 border border-white/10 shadow-xl transition-all duration-700",
+              "bg-secondary rounded-2xl p-8 border border-white/10 shadow-xl transition-opacity transition-transform duration-500",
               inView ? "opacity-100" : "opacity-0 translate-x-[50px]",
             )}
+            style={{ willChange: "transform, opacity" }}
           >
             {!submitted ? (
               <>
