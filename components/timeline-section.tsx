@@ -21,8 +21,18 @@ function TimelineItem({ step, title, description, icon, index, isLast }: Timelin
   return (
     <div
       ref={ref}
-      className={cn("flex relative", isLast ? "" : "pb-16", inView ? "animate-fade-in" : "opacity-0 translate-y-5")}
-      style={{ animationDelay: `${index * 0.2}s` }}
+      className={cn(
+        "flex relative",
+        isLast ? "" : "pb-16",
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+      )}
+      style={{ 
+        transitionProperty: "opacity, transform",
+        transitionDuration: "400ms",
+        transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+        transitionDelay: `${Math.min(index * 150, 600)}ms`,
+        willChange: "transform, opacity"
+      }}
     >
       {/* Линия */}
       {!isLast && (
@@ -36,7 +46,7 @@ function TimelineItem({ step, title, description, icon, index, isLast }: Timelin
 
       {/* Контент */}
       <div className="ml-8">
-        <div className="bg-secondary rounded-xl p-6 border border-white/10 shadow-md hover:shadow-lg hover:shadow-primary/10 transition-all">
+        <div className="bg-secondary rounded-xl p-6 border border-white/10 shadow-md hover:shadow-lg hover:shadow-primary/10 transition-shadow transition-transform duration-300 hover:-translate-y-1">
           <div className="inline-block bg-white/5 text-accent-cyan text-sm font-medium py-1 px-3 rounded-full mb-3">
             Шаг {step}
           </div>
@@ -100,9 +110,10 @@ export default function TimelineSection() {
           <h2
             ref={ref}
             className={cn(
-              "text-3xl md:text-4xl font-bold mb-6 transition-all duration-700",
+              "text-3xl md:text-4xl font-bold mb-6 transition-opacity transition-transform duration-500",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
             )}
+            style={{ willChange: "transform, opacity" }}
           >
             Прозрачный <span className="text-primary">процесс</span> работы
           </h2>
@@ -128,9 +139,9 @@ export default function TimelineSection() {
 
         <div className="text-center mt-16">
           <p className="mb-6 text-white/80">Готовы начать сотрудничество?</p>
-          <a
+          
             href="#contact"
-            className="inline-flex items-center justify-center h-10 px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all"
+            className="inline-flex items-center justify-center h-10 px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-200"
           >
             Обсудить проект
           </a>
