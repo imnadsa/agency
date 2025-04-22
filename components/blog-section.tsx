@@ -27,10 +27,10 @@ function BlogCard({ image, category, title, excerpt, date, author, index }: Blog
     <div
       ref={ref}
       className={cn(
-        "bg-secondary border border-white/10 rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-primary/10 transition-all hover:-translate-y-1 group",
-        inView ? "animate-fade-in" : "opacity-0 translate-y-5",
+        "bg-secondary border border-white/10 rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-primary/10 transition-transform transition-shadow duration-300 hover:-translate-y-1 group",
+        inView ? "opacity-100 translate-y-0 transition-opacity transition-transform duration-300" : "opacity-0 translate-y-5",
       )}
-      style={{ animationDelay: `${index * 0.2}s` }}
+      style={{ transitionDelay: `${Math.min(index * 100, 300)}ms`, willChange: "transform, opacity" }}
     >
       <div className="relative h-48 overflow-hidden">
         <Image
@@ -112,7 +112,7 @@ export default function BlogSection() {
             <h2
               ref={ref}
               className={cn(
-                "text-3xl md:text-4xl font-bold mb-4 transition-all duration-700",
+                "text-3xl md:text-4xl font-bold mb-4 transition-opacity transition-transform duration-500",
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
               )}
             >
