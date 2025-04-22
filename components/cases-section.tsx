@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useCallback } from "react"
 import { useInView } from "react-intersection-observer"
 import { ArrowRight, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -45,26 +45,34 @@ function CaseStudy({
     <div
       ref={ref}
       className={cn(
-        "grid grid-cols-1 lg:grid-cols-2 gap-8 items-center absolute w-full transition-all",
+        "grid grid-cols-1 lg:grid-cols-2 gap-8 items-center absolute w-full",
+        "transition-opacity transition-transform",
         isActive && !isTransitioning 
-          ? "opacity-100 translate-x-0 z-20 duration-500" 
+          ? "opacity-100 translate-x-0 z-20 duration-300 pointer-events-auto" 
           : isActive && isTransitioning && direction === "next"
-            ? "opacity-0 -translate-x-full z-10 duration-300" 
+            ? "opacity-0 -translate-x-full z-10 duration-250 pointer-events-none" 
             : isActive && isTransitioning && direction === "prev"
-              ? "opacity-0 translate-x-full z-10 duration-300"
+              ? "opacity-0 translate-x-full z-10 duration-250 pointer-events-none"
               : !isActive && isTransitioning && direction === "next" && index === (direction === "next" ? 1 : -1)
-                ? "opacity-0 translate-x-full z-10 duration-0"
+                ? "opacity-0 translate-x-full z-10 duration-0 pointer-events-none"
                 : !isActive && isTransitioning && direction === "prev" && index === (direction === "prev" ? -1 : 1)
-                  ? "opacity-0 -translate-x-full z-10 duration-0"
-                  : "opacity-0 translate-x-full invisible z-0 duration-0",
-        inView ? "animate-fade-in" : "opacity-0",
+                  ? "opacity-0 -translate-x-full z-10 duration-0 pointer-events-none"
+                  : "opacity-0 translate-x-full invisible z-0 duration-0 pointer-events-none",
+        inView ? "opacity-100 translate-y-0" : "opacity-0"
       )}
       style={{ 
-        animationDelay: `${index * 0.2}s`,
+        willChange: "transform, opacity",
+        transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)" 
       }}
     >
       <div className="relative rounded-2xl overflow-hidden shadow-xl border border-white/10 h-[400px]">
-        <Image src={image || "/placeholder.svg"} alt={title} fill className="object-cover" />
+        <Image 
+          src={image || "/placeholder.svg"} 
+          alt={title} 
+          fill 
+          loading="lazy"
+          className="object-cover" 
+        />
         <div className="absolute top-6 left-6 bg-black/50 backdrop-blur-sm p-3 rounded-xl">
           <Image
             src={logo || "/placeholder.svg"}
@@ -115,7 +123,6 @@ export default function CasesSection() {
   const [activeCase, setActiveCase] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [direction, setDirection] = useState<"next" | "prev" | null>(null)
-  const [nextCaseIndex, setNextCaseIndex] = useState<number | null>(null)
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -163,39 +170,40 @@ export default function CasesSection() {
     },
   ]
 
-  // Переход к следующему кейсу с анимацией
-  const transitionToCase = (index: number, dir: "next" | "prev") => {
+  // Оптимизированный переход к кейсу
+  const transitionToCase = useCallback((index: number, dir: "next" | "prev") => {
     if (isTransitioning || index === activeCase) return
     
     setDirection(dir)
     setIsTransitioning(true)
-    setNextCaseIndex(index)
     
-    // Сначала скрываем текущий слайд
-    setTimeout(() => {
-      setActiveCase(index)
-      // Затем после короткой паузы завершаем переход
+    // Используем RequestAnimationFrame для синхронизации с циклом рендеринга
+    requestAnimationFrame(() => {
+      // Сначала скрываем текущий слайд
       setTimeout(() => {
-        setIsTransitioning(false)
-        setNextCaseIndex(null)
-      }, 50)
-    }, 300) // Время для анимации исчезновения текущего слайда
-  }
+        setActiveCase(index)
+        // Затем после короткой паузы завершаем переход
+        setTimeout(() => {
+          setIsTransitioning(false)
+        }, 50)
+      }, 250) // Меньшее время для анимации исчезновения текущего слайда
+    })
+  }, [isTransitioning, activeCase])
 
-  const nextCase = () => {
+  const nextCase = useCallback(() => {
     const next = activeCase === caseStudies.length - 1 ? 0 : activeCase + 1
     transitionToCase(next, "next")
-  }
+  }, [activeCase, caseStudies.length, transitionToCase])
 
-  const prevCase = () => {
+  const prevCase = useCallback(() => {
     const prev = activeCase === 0 ? caseStudies.length - 1 : activeCase - 1
     transitionToCase(prev, "prev")
-  }
+  }, [activeCase, caseStudies.length, transitionToCase])
 
-  const goToCase = (index: number) => {
+  const goToCase = useCallback((index: number) => {
     const dir = index > activeCase ? "next" : "prev"
     transitionToCase(index, dir)
-  }
+  }, [activeCase, transitionToCase])
 
   return (
     <section id="cases" className="py-24 relative overflow-hidden">
@@ -206,9 +214,10 @@ export default function CasesSection() {
             <h2
               ref={ref}
               className={cn(
-                "text-3xl md:text-4xl font-bold mb-4 transition-all duration-700",
+                "text-3xl md:text-4xl font-bold mb-4 transition-opacity transition-transform duration-500",
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
               )}
+              style={{ willChange: "transform, opacity" }}
             >
               Истории <span className="text-primary">успеха</span> наших клиентов
             </h2>
@@ -265,7 +274,7 @@ export default function CasesSection() {
               onClick={() => goToCase(index)}
               disabled={isTransitioning}
               className={cn(
-                "w-3 h-3 rounded-full mx-1 transition-all",
+                "w-3 h-3 rounded-full mx-1 transition-colors transition-transform duration-200",
                 index === activeCase ? "bg-primary scale-125" : "bg-white/30 hover:bg-white/50",
               )}
               aria-label={`Перейти к кейсу ${index + 1}`}
