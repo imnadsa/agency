@@ -1,13 +1,12 @@
 "use client"
 
-import type React from "react"
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { useInView } from "react-intersection-observer"
 import { ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 type ServiceCardProps = {
-  icon?: React.ReactNode
+  icon?: string
   title: string
   description: string
   index: number
@@ -26,28 +25,40 @@ function ServiceCard({ icon, title, description, index, logos, features }: Servi
     <div
       ref={ref}
       className={cn(
-        "bg-secondary border border-white/10 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl relative overflow-hidden group",
-        inView ? "animate-fade-in" : "opacity-0 translate-y-5",
+        "bg-secondary border border-white/10 rounded-2xl p-6 transition-shadow transition-opacity transition-transform duration-300 relative overflow-hidden group",
+        isHovered ? "shadow-md shadow-primary/10 -translate-y-2" : "hover:shadow-sm",
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5",
       )}
-      style={{ animationDelay: `${index * 0.2}s` }}
+      style={{
+        transitionDelay: `${Math.min(index * 50, 400)}ms`,
+        willChange: "transform, opacity, box-shadow",
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Градиентный фон при наведении */}
-      <div className={cn(
-        "absolute inset-0 bg-gradient-to-br from-primary/10 to-accent-cyan/10 opacity-0 transition-opacity duration-300",
-        isHovered && "opacity-100"
-      )} />
-      
+      <div
+        className={cn(
+          "absolute inset-0 bg-gradient-to-br from-primary/10 to-accent-cyan/10 opacity-0 transition-opacity duration-250",
+          isHovered && "opacity-100",
+        )}
+        style={{ willChange: "opacity" }}
+      />
+
       {/* Основной контент */}
       <div className="relative z-10">
         <div className="flex justify-between items-start">
           <div className="flex-1">
-            <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-[#6812F3] transition-colors">
+            <h3
+              className={cn(
+                "text-2xl font-bold mb-4 text-white transition-colors duration-200",
+                isHovered && "text-primary",
+              )}
+            >
               {title}
             </h3>
             <p className="text-white/80 mb-6 leading-relaxed">{description}</p>
-            
+
             {/* Список возможностей */}
             {features && features.length > 0 && (
               <ul className="space-y-2 mb-6">
@@ -59,28 +70,34 @@ function ServiceCard({ icon, title, description, index, logos, features }: Servi
                 ))}
               </ul>
             )}
-            
+
             {/* Логотипы */}
             {logos && (
               <div className="flex flex-wrap gap-3 mt-4 mb-2">
                 {logos}
               </div>
             )}
-            
+
             {/* CTA */}
-            <div className={cn(
-              "mt-6 inline-flex items-center text-sm font-medium text-accent-cyan opacity-0 transform translate-x-[-10px] transition-all duration-300",
-              isHovered && "opacity-100 translate-x-0"
-            )}>
+            <div
+              className={cn(
+                "mt-6 inline-flex items-center text-sm font-medium text-accent-cyan opacity-0 transform translate-x-[-10px] transition-all duration-250",
+                isHovered && "opacity-100 translate-x-0",
+              )}
+              style={{ willChange: "opacity, transform" }}
+            >
               Подробнее <ArrowRight className="ml-1 w-4 h-4" />
             </div>
           </div>
-          
+
           {icon && (
-            <div className={cn(
-              "text-4xl bg-primary/20 p-4 rounded-xl text-accent-cyan transition-transform duration-300",
-              isHovered && "scale-110 rotate-3"
-            )}>
+            <div
+              className={cn(
+                "text-4xl bg-primary/20 p-4 rounded-xl text-accent-cyan transition-transform duration-200",
+                isHovered && "scale-110 rotate-3",
+              )}
+              style={{ willChange: "transform" }}
+            >
               {icon}
             </div>
           )}
@@ -92,9 +109,12 @@ function ServiceCard({ icon, title, description, index, logos, features }: Servi
 
 // Улучшенные компоненты логотипов
 const ServiceLogo = ({ bg, text, textColor = "white" }: { bg: string; text: string; textColor?: string }) => (
-  <div 
-    className={`w-12 h-12 flex items-center justify-center rounded-lg shadow-md transition-transform duration-300 hover:scale-110 hover:rotate-3`}
-    style={{ backgroundColor: bg }}
+  <div
+    className={cn(
+      "w-12 h-12 flex items-center justify-center rounded-lg shadow-md transition-transform duration-200",
+      "hover:scale-110 hover:rotate-3",
+    )}
+    style={{ backgroundColor: bg, willChange: "transform" }}
   >
     <span className={`font-bold text-${textColor}`}>{text}</span>
   </div>
@@ -114,7 +134,7 @@ export default function Services() {
       features: [
         "Комплексные рекламные кампании",
         "Ретаргетинг и поиск похожих аудиторий",
-        "Отслеживание конверсий и аналитика"
+        "Отслеживание конверсий и аналитика",
       ],
       logos: (
         <>
@@ -132,7 +152,7 @@ export default function Services() {
       features: [
         "Адаптивный дизайн для всех устройств",
         "Интеграция с CRM и МИС системами",
-        "SEO-оптимизация и быстрая загрузка"
+        "SEO-оптимизация и быстрая загрузка",
       ],
       logos: (
         <>
@@ -149,7 +169,7 @@ export default function Services() {
       features: [
         "Контент-стратегия для медицинских услуг",
         "Вовлекающие публикации и сторис",
-        "Работа с репутацией в комментариях"
+        "Работа с репутацией в комментариях",
       ],
       logos: (
         <>
@@ -166,7 +186,7 @@ export default function Services() {
       features: [
         "Глубокий анализ ключевых слов",
         "A/B тестирование объявлений",
-        "Оптимизация ставок и бюджета"
+        "Оптимизация ставок и бюджета",
       ],
       logos: (
         <>
@@ -182,7 +202,7 @@ export default function Services() {
       features: [
         "Чат-боты для записи и консультаций",
         "Автоматизация документооборота",
-        "Предиктивная аналитика пациентопотока"
+        "Предиктивная аналитика пациентопотока",
       ],
       logos: (
         <>
@@ -194,8 +214,15 @@ export default function Services() {
     },
   ]
 
+  const handleCardClick = useCallback((index: number) => {
+    // Можно добавить логику для обработки клика, если нужно
+  }, [])
+
   return (
-    <section id="services" className="py-24 relative overflow-hidden">
+    <section
+      id="services"
+      className="py-24 relative overflow-hidden bg-gradient-to-r from-primary/5 to-accent-cyan/5"
+    >
       <div className="container">
         {/* Заголовок секции */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -203,9 +230,10 @@ export default function Services() {
           <h2
             ref={ref}
             className={cn(
-              "text-3xl md:text-4xl font-bold mb-6 transition-all duration-700",
+              "text-3xl md:text-4xl font-bold mb-6 transition-opacity transition-transform duration-500",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
             )}
+            style={{ willChange: "transform, opacity" }}
           >
             Комплексные <span className="text-primary">digital-решения</span> для медицинских клиник
           </h2>
@@ -215,8 +243,8 @@ export default function Services() {
         </div>
 
         {/* Декоративные элементы */}
-        <div className="absolute top-1/4 left-0 w-64 h-64 bg-primary/10 rounded-full filter blur-3xl opacity-70 -z-10"></div>
-        <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-accent-cyan/10 rounded-full filter blur-3xl opacity-70 -z-10"></div>
+        <div className="absolute top-1/3 left-0 w-64 h-64 bg-primary/5 rounded-full filter blur-3xl opacity-70 -z-10"></div>
+        <div className="absolute bottom-1/3 right-0 w-80 h-80 bg-accent-cyan/5 rounded-full filter blur-3xl opacity-70 -z-10"></div>
 
         {/* Основной блок */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -240,6 +268,7 @@ export default function Services() {
               index={index + 1}
               logos={service.logos}
               features={service.features}
+              onClick={() => handleCardClick(index + 1)}
             />
           ))}
         </div>
@@ -248,7 +277,11 @@ export default function Services() {
         <div className="mt-12 text-center">
           <a
             href="#contact"
-            className="inline-block text-white font-medium text-lg rounded-xl px-10 py-4 bg-primary hover:bg-primary/90 transition-colors duration-300 shadow-lg hover:shadow-primary/20"
+            className={cn(
+              "inline-flex items-center justify-center h-10 px-6 py-2 bg-primary text-white rounded-lg transition-colors duration-200",
+              "hover:bg-primary/90 hover:shadow-md hover:shadow-primary/20",
+            )}
+            style={{ willChange: "background-color, box-shadow" }}
           >
             Обсудить ваш проект
           </a>
