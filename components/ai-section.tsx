@@ -1,5 +1,4 @@
 "use client"
-
 import { useInView } from "react-intersection-observer"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
@@ -22,8 +21,8 @@ function AIFeature({ icon, title, description, index }: AIFeatureProps) {
   return (
     <div
       ref={ref}
-      className={cn("flex items-start gap-4 mb-6", inView ? "animate-fade-in" : "opacity-0 translate-y-5")}
-      style={{ animationDelay: `${index * 0.2}s` }}
+      className={cn("flex items-start gap-4 mb-6", inView ? "opacity-100 translate-y-0 transition-all duration-300" : "opacity-0 translate-y-5")}
+      style={{ transitionDelay: `${Math.min(index * 100, 200)}ms`, willChange: "transform, opacity" }}
     >
       <div className="flex items-center justify-center min-w-12 h-12 rounded-xl bg-white/5 text-accent-cyan text-2xl">
         {icon}
@@ -74,7 +73,7 @@ export default function AiSection() {
             <h2
               ref={ref}
               className={cn(
-                "text-3xl md:text-4xl font-bold mb-6 transition-all duration-700",
+                "text-3xl md:text-4xl font-bold mb-6 transition-opacity transition-transform duration-500",
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
               )}
             >
@@ -103,7 +102,7 @@ export default function AiSection() {
           </div>
 
           <div className="relative">
-            <div className="relative w-full rounded-2xl overflow-hidden shadow-xl border border-white/10 floating">
+            <div className="relative w-full rounded-2xl overflow-hidden shadow-xl border border-white/10 floating" style={{ willChange: "transform" }}>
               <Image
                 src="/placeholder.svg?height=500&width=600"
                 alt="AI в медицине"
