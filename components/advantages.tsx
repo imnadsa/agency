@@ -20,10 +20,10 @@ function MetricCard({ value, symbol, title, description, index }: MetricCardProp
     <div
       ref={ref}
       className={cn(
-        "bg-secondary border border-white/10 rounded-2xl p-10 text-center transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10 hover:border-primary/30",
-        inView ? "animate-fade-in" : "opacity-0 translate-y-5",
+        "bg-secondary border border-white/10 rounded-2xl p-10 text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10 hover:border-primary/30",
+        inView ? "opacity-100 translate-y-0 transition-opacity transition-transform duration-300" : "opacity-0 translate-y-5",
       )}
-      style={{ animationDelay: `${index * 0.2}s` }}
+      style={{ transitionDelay: `${Math.min(index * 150, 300)}ms`, willChange: "transform, opacity" }}
     >
       <div className="text-6xl font-extrabold mb-4 text-accent-cyan">
         {value}
@@ -76,9 +76,10 @@ export default function Advantages() {
           <h2
             ref={ref}
             className={cn(
-              "text-3xl md:text-4xl font-bold mb-6 transition-all duration-700",
+              "text-3xl md:text-4xl font-bold mb-6 transition-opacity transition-transform duration-500",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
             )}
+            style={{ willChange: "transform, opacity" }}
           >
             Реальные <span className="text-primary">преимущества</span> для вашей клиники
           </h2>
