@@ -37,6 +37,7 @@ function BlogCard({ image, category, title, excerpt, date, author, index }: Blog
           src={image || "/placeholder.svg"}
           alt={title}
           fill
+          loading="lazy"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-sm py-1 px-3 rounded-full text-xs font-medium text-accent-cyan">
@@ -115,6 +116,7 @@ export default function BlogSection() {
                 "text-3xl md:text-4xl font-bold mb-4 transition-opacity transition-transform duration-500",
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
               )}
+              style={{ willChange: "transform, opacity" }}
             >
               Полезные <span className="text-primary">статьи</span> и кейсы
             </h2>
