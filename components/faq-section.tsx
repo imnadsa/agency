@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { cn } from "@/lib/utils"
 import { ChevronDown } from "lucide-react"
 import { useInView } from "react-intersection-observer"
@@ -23,11 +23,14 @@ function FAQItem({ question, answer, index, isOpen, onClick }: FAQItemProps) {
     <div
       ref={ref}
       className={cn(
-        "border border-white/10 rounded-xl overflow-hidden mb-4 bg-secondary transition-all",
+        "border border-white/10 rounded-xl overflow-hidden mb-4 bg-secondary transition-shadow transition-opacity transition-transform duration-300",
         isOpen ? "shadow-md shadow-primary/10" : "hover:shadow-sm",
-        inView ? "animate-fade-in" : "opacity-0 translate-y-5",
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5",
       )}
-      style={{ animationDelay: `${index * 0.1}s` }}
+      style={{ 
+        transitionDelay: `${Math.min(index * 50, 400)}ms`,
+        willChange: "transform, opacity, box-shadow" 
+      }}
     >
       <button
         onClick={onClick}
@@ -36,14 +39,16 @@ function FAQItem({ question, answer, index, isOpen, onClick }: FAQItemProps) {
       >
         <h3 className="text-xl font-bold text-white">{question}</h3>
         <ChevronDown
-          className={cn("w-5 h-5 text-accent-cyan transition-transform", isOpen ? "transform rotate-180" : "")}
+          className={cn("w-5 h-5 text-accent-cyan transition-transform duration-200", isOpen ? "transform rotate-180" : "")}
+          style={{ willChange: "transform" }}
         />
       </button>
       <div
         className={cn(
-          "overflow-hidden transition-all duration-300 ease-in-out",
+          "overflow-hidden transition-all duration-250 ease-in-out",
           isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
         )}
+        style={{ willChange: "max-height, opacity" }}
       >
         <div className="p-6 pt-0 text-white/80">{answer}</div>
       </div>
@@ -58,9 +63,9 @@ export default function FaqSection() {
     threshold: 0.1,
   })
 
-  const toggleFAQ = (index: number) => {
+  const toggleFAQ = useCallback((index: number) => {
     setOpenIndex(openIndex === index ? null : index)
-  }
+  }, [openIndex])
 
   const faqs = [
     {
@@ -98,9 +103,10 @@ export default function FaqSection() {
           <h2
             ref={ref}
             className={cn(
-              "text-3xl md:text-4xl font-bold mb-6 transition-all duration-700",
+              "text-3xl md:text-4xl font-bold mb-6 transition-opacity transition-transform duration-500",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
             )}
+            style={{ willChange: "transform, opacity" }}
           >
             Ответы на <span className="text-primary">популярные</span> вопросы
           </h2>
@@ -125,9 +131,9 @@ export default function FaqSection() {
 
         <div className="text-center mt-12">
           <p className="mb-6 text-white/80">Не нашли ответ на свой вопрос?</p>
-          <a
+          
             href="#contact"
-            className="inline-flex items-center justify-center h-10 px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all"
+            className="inline-flex items-center justify-center h-10 px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-200"
           >
             Задайте его нам
           </a>
