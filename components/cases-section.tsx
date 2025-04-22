@@ -4,10 +4,14 @@ import { useState, useCallback } from "react"
 import { useInView } from "react-intersection-observer"
 import { ArrowRight, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 import Link from "next/link"
+import { useSwipeable } from "react-swipeable"
 import { cn } from "@/lib/utils"
 
-type TestimonialCardProps = {
+type CaseStudyProps = {
+  image: string
+  logo: string
   title: string
   description: string
   results: {
@@ -21,7 +25,9 @@ type TestimonialCardProps = {
   direction: "next" | "prev" | null
 }
 
-function TestimonialCard({
+function CaseStudy({
+  image,
+  logo,
   title,
   description,
   results,
@@ -30,7 +36,7 @@ function TestimonialCard({
   isActive,
   isTransitioning,
   direction,
-}: TestimonialCardProps) {
+}: CaseStudyProps) {
   const [isHovered, setIsHovered] = useState(false)
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -41,7 +47,7 @@ function TestimonialCard({
     <div
       ref={ref}
       className={cn(
-        "absolute w-full",
+        "grid grid-cols-1 lg:grid-cols-2 gap-8 items-center absolute w-full",
         "transition-opacity transition-transform",
         isActive && !isTransitioning
           ? "opacity-100 translate-x-0 z-20 duration-300 pointer-events-auto"
@@ -66,70 +72,92 @@ function TestimonialCard({
     >
       <div
         className={cn(
-          "bg-secondary border border-white/10 rounded-2xl p-6 transition-shadow transition-transform duration-300 relative overflow-hidden group",
-          isHovered ? "shadow-md shadow-primary/10 -translate-y-2" : "hover:shadow-sm",
+          "relative rounded-2xl overflow-hidden shadow-md border border-white/10 h-[400px] transition-transform duration-200",
+          isHovered && "scale-105",
         )}
-        style={{ willChange: "transform, box-shadow" }}
+        style={{ willChange: "transform" }}
       >
-        {/* Градиентный фон при наведении */}
-        <div
-          className={cn(
-            "absolute inset-0 bg-gradient-to-br from-primary/10 to-accent-cyan/10 opacity-0 transition-opacity duration-250",
-            isHovered && "opacity-100",
-          )}
-          style={{ willChange: "opacity" }}
+        <Image
+          src={image || "/placeholder.svg"}
+          alt={title}
+          fill
+          loading="lazy"
+          className="object-cover"
         />
-
-        {/* Основной контент */}
-        <div className="relative z-10">
-          <div className="flex flex-wrap gap-2 mb-4">
-            {tags.map((tag, idx) => (
-              <span
-                key={idx}
-                className={cn(
-                  "bg-white/5 text-accent-cyan text-xs font-medium py-1 px-3 rounded-full border border-white/10 transition-transform duration-200",
-                  isHovered && "scale-105",
-                )}
-                style={{ willChange: "transform" }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <h3
-            className={cn(
-              "text-2xl md:text-3xl font-bold mb-4 text-white transition-colors duration-200",
-              isHovered && "text-primary",
-            )}
-          >
-            {title}
-          </h3>
-          <p className="text-white/80 mb-6">{description}</p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {results.map((result, idx) => (
-              <div
-                key={idx}
-                className={cn(
-                  "bg-white/5 p-4 rounded-xl border border-white/10 transition-transform duration-200",
-                  isHovered && "scale-105",
-                )}
-                style={{ willChange: "transform" }}
-              >
-                <div className="text-2xl font-bold text-accent-cyan mb-1">{result.value}</div>
-                <div className="text-xs text-white/70">{result.label}</div>
-              </div>
-            ))}
-          </div>
+        <div className="absolute top-6 left-6 bg-black/50 backdrop-blur-sm p-3 rounded-xl">
+          <Image
+            src={logo || "/placeholder.svg"}
+            alt={`${title} logo`}
+            width={120}
+            height={40}
+            className="h-8 w-auto"
+          />
         </div>
+      </div>
+
+      <div>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {tags.map((tag, idx) => (
+            <span
+              key={idx}
+              className={cn(
+                "bg-white/5 text-accent-cyan text-xs font-medium py-1 px-3 rounded-full border border-white/10 transition-transform duration-200",
+                isHovered && "scale-105",
+              )}
+              style={{ willChange: "transform" }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <h3
+          className={cn(
+            "text-2xl md:text-3xl font-bold mb-4 text-white transition-colors duration-200",
+            isHovered && "text-primary",
+          )}
+        >
+          {title}
+        </h3>
+        <p className="text-white/80 mb-6">{description}</p>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+          {results.map((result, idx) => (
+            <div
+              key={idx}
+              className={cn(
+                "bg-white/5 p-4 rounded-xl border border-white/10 transition-transform duration-200",
+                isHovered && "scale-105",
+              )}
+              style={{ willChange: "transform" }}
+            >
+              <div className="text-2xl font-bold text-accent-cyan mb-1">{result.value}</div>
+              <div className="text-xs text-white/70">{result.label}</div>
+            </div>
+          ))}
+        </div>
+
+        <Button
+          asChild
+          variant="outline"
+          className={cn(
+            "border-white/20 text-white hover:border-accent-cyan hover:bg-white/5 transition-all duration-200",
+            isHovered && "border-accent-cyan bg-white/5",
+          )}
+          style={{ willChange: "background-color, border-color" }}
+        >
+          <Link href="#" className="flex items-center">
+            Подробнее о кейсе
+            <ArrowRight className="ml-2 w-4 h-4" />
+          </Link>
+        </Button>
       </div>
     </div>
   )
 }
 
-export default function TestimonialsSection() {
-  const [activeTestimonial, setActiveTestimonial] = useState(0)
+export default function CasesSection() {
+  const [activeCase, setActiveCase] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [direction, setDirection] = useState<"next" | "prev" | null>(null)
   const { ref, inView } = useInView({
@@ -137,85 +165,101 @@ export default function TestimonialsSection() {
     threshold: 0.1,
   })
 
-  const testimonials = [
+  const caseStudies = [
     {
-      title: "Стоматологическая клиника «ДентаПлюс»",
-      description:
-        "Внедрили AI-чат-бота для первичной консультации пациентов, разработали мобильное приложение и настроили систему лояльности для повторных обращений.",
-      results: [
-        { label: "Снижение нагрузки на администраторов", value: "-65%" },
-        { label: "Рост повторных обращений", value: "+100%" },
-      ],
-      tags: ["AI-решения", "Мобильное приложение", "Система лояльности"],
-    },
-    {
+      image: "/placeholder.svg?height=600&width=800",
+      logo: "/placeholder.svg?height=80&width=200",
       title: "Многопрофильная клиника «МедЭксперт»",
       description:
         "Разработали новый сайт с онлайн-записью, внедрили систему автоматизации маркетинга и настроили таргетированную рекламу для привлечения новых пациентов.",
       results: [
         { label: "Рост записей на прием", value: "+73%" },
         { label: "Снижение стоимости заявки", value: "-42%" },
+        { label: "Увеличение конверсии", value: "+38%" },
       ],
       tags: ["Разработка сайта", "Автоматизация", "Таргетированная реклама"],
     },
     {
+      image: "/placeholder.svg?height=600&width=800",
+      logo: "/placeholder.svg?height=80&width=200",
+      title: "Стоматологическая клиника «ДентаПлюс»",
+      description:
+        "Внедрили AI-чат-бота для первичной консультации пациентов, разработали мобильное приложение и настроили систему лояльности для повторных обращений.",
+      results: [
+        { label: "Снижение нагрузки на администраторов", value: "-65%" },
+        { label: "Рост повторных обращений", value: "+47%" },
+        { label: "Увеличение среднего чека", value: "+28%" },
+      ],
+      tags: ["AI-решения", "Мобильное приложение", "Система лояльности"],
+    },
+    {
+      image: "/placeholder.svg?height=600&width=800",
+      logo: "/placeholder.svg?height=80&width=200",
       title: "Сеть лабораторий «ЛабТест»",
       description:
         "Разработали систему автоматического оповещения о готовности анализов, создали личный кабинет пациента и настроили контекстную рекламу для привлечения новых клиентов.",
       results: [
         { label: "Сокращение времени обработки результатов", value: "-58%" },
         { label: "Рост количества новых клиентов", value: "+62%" },
+        { label: "Повышение удовлетворенности", value: "+41%" },
       ],
       tags: ["Автоматизация", "Личный кабинет", "Контекстная реклама"],
     },
   ]
 
-  const transitionToTestimonial = useCallback(
+  const transitionToCase = useCallback(
     (index: number, dir: "next" | "prev") => {
-      if (isTransitioning || index === activeTestimonial) return;
+      if (isTransitioning || index === activeCase) return;
 
       setDirection(dir);
       setIsTransitioning(true);
 
       requestAnimationFrame(() => {
         setTimeout(() => {
-          setActiveTestimonial(index);
+          setActiveCase(index);
           setTimeout(() => {
             setIsTransitioning(false);
           }, 50);
         }, 250);
       });
     },
-    [isTransitioning, activeTestimonial],
+    [isTransitioning, activeCase],
   );
 
-  const nextTestimonial = useCallback(() => {
-    const next = activeTestimonial === testimonials.length - 1 ? 0 : activeTestimonial + 1;
-    transitionToTestimonial(next, "next");
-  }, [activeTestimonial, testimonials.length, transitionToTestimonial]);
+  const nextCase = useCallback(() => {
+    const next = activeCase === caseStudies.length - 1 ? 0 : activeCase + 1;
+    transitionToCase(next, "next");
+  }, [activeCase, caseStudies.length, transitionToCase]);
 
-  const prevTestimonial = useCallback(() => {
-    const prev = activeTestimonial === 0 ? testimonials.length - 1 : activeTestimonial - 1;
-    transitionToTestimonial(prev, "prev");
-  }, [activeTestimonial, testimonials.length, transitionToTestimonial]);
+  const prevCase = useCallback(() => {
+    const prev = activeCase === 0 ? caseStudies.length - 1 : activeCase - 1;
+    transitionToCase(prev, "prev");
+  }, [activeCase, caseStudies.length, transitionToCase]);
 
-  const goToTestimonial = useCallback(
+  const goToCase = useCallback(
     (index: number) => {
-      const dir = index > activeTestimonial ? "next" : "prev";
-      transitionToTestimonial(index, dir);
+      const dir = index > activeCase ? "next" : "prev";
+      transitionToCase(index, dir);
     },
-    [activeTestimonial, transitionToTestimonial],
+    [activeCase, transitionToCase],
   );
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => nextCase(),
+    onSwipedRight: () => prevCase(),
+    trackMouse: true, // Для тестирования на десктопе
+    delta: 10, // Минимальное расстояние для свайпа
+  });
 
   return (
     <section
-      id="testimonials"
+      id="cases"
       className="py-24 relative overflow-hidden bg-gradient-to-r from-primary/5 to-accent-cyan/5"
     >
       <div className="container">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
           <div className="mb-6 md:mb-0">
-            <span className="section-title-tag">Отзывы</span>
+            <span className="section-title-tag">Наши кейсы</span>
             <h2
               ref={ref}
               className={cn(
@@ -224,16 +268,17 @@ export default function TestimonialsSection() {
               )}
               style={{ willChange: "transform, opacity" }}
             >
-              Отзывы наших <span className="text-primary">клиентов</span>
+              Истории <span className="text-primary">успеха</span> наших клиентов
             </h2>
             <p className="max-w-2xl text-white/80">
-              Узнайте, что говорят наши клиенты о наших решениях и как они помогли их бизнесу
+              Реальные примеры того, как наши digital-решения помогли медицинским клиникам увеличить поток пациентов и
+              оптимизировать рабочие процессы
             </p>
           </div>
 
           <div className="flex gap-2">
             <Button
-              onClick={prevTestimonial}
+              onClick={prevCase}
               size="icon"
               variant="outline"
               disabled={isTransitioning}
@@ -246,7 +291,7 @@ export default function TestimonialsSection() {
               <ArrowLeft className="h-4 w-4" />
             </Button>
             <Button
-              onClick={nextTestimonial}
+              onClick={nextCase}
               size="icon"
               variant="outline"
               disabled={isTransitioning}
@@ -261,16 +306,18 @@ export default function TestimonialsSection() {
           </div>
         </div>
 
-        <div className="relative min-h-[400px]">
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard
+        <div className="relative min-h-[700px] pb-8" {...swipeHandlers}>
+          {caseStudies.map((caseStudy, index) => (
+            <CaseStudy
               key={index}
-              title={testimonial.title}
-              description={testimonial.description}
-              results={testimonial.results}
-              tags={testimonial.tags}
+              image={caseStudy.image}
+              logo={caseStudy.logo}
+              title={caseStudy.title}
+              description={caseStudy.description}
+              results={caseStudy.results}
+              tags={caseStudy.tags}
               index={index}
-              isActive={index === activeTestimonial}
+              isActive={index === activeCase}
               isTransitioning={isTransitioning}
               direction={direction}
             />
@@ -278,17 +325,17 @@ export default function TestimonialsSection() {
         </div>
 
         <div className="flex justify-center mt-8">
-          {testimonials.map((_, index) => (
+          {caseStudies.map((_, index) => (
             <button
               key={index}
-              onClick={() => goToTestimonial(index)}
+              onClick={() => goToCase(index)}
               disabled={isTransitioning}
               className={cn(
                 "w-3 h-3 rounded-full mx-1 transition-colors transition-transform duration-200",
-                index === activeTestimonial ? "bg-primary scale-125" : "bg-white/30 hover:bg-white/50",
+                index === activeCase ? "bg-primary scale-125" : "bg-white/30 hover:bg-white/50",
               )}
               style={{ willChange: "background-color, transform" }}
-              aria-label={`Перейти к отзыву ${index + 1}`}
+              aria-label={`Перейти к кейсу ${index + 1}`}
             />
           ))}
         </div>
@@ -302,10 +349,7 @@ export default function TestimonialsSection() {
             )}
             style={{ willChange: "background-color, box-shadow" }}
           >
-            <Link href="#faq" className="flex items-center">
-              Часто задаваемые вопросы
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </Link>
+            <Link href="#">Все кейсы</Link>
           </Button>
         </div>
       </div>
