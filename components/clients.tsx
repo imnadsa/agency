@@ -1,5 +1,4 @@
 "use client"
-
 import { useInView } from "react-intersection-observer"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
@@ -9,7 +8,7 @@ export default function Clients() {
     triggerOnce: true,
     threshold: 0.1,
   })
-
+  
   const clients = [
     { name: "Клиника 1", logo: "/placeholder.svg?height=100&width=100" },
     { name: "Клиника 2", logo: "/placeholder.svg?height=100&width=100" },
@@ -17,7 +16,7 @@ export default function Clients() {
     { name: "Клиника 4", logo: "/placeholder.svg?height=100&width=100" },
     { name: "Клиника 5", logo: "/placeholder.svg?height=100&width=100" },
   ]
-
+  
   return (
     <section className="py-16 relative overflow-hidden">
       <div className="section-divider"></div>
@@ -25,9 +24,10 @@ export default function Clients() {
         <h2
           ref={ref}
           className={cn(
-            "text-center text-xl mb-12 opacity-80 transition-all duration-700",
+            "text-center text-xl mb-12 opacity-80 transition-opacity transition-transform duration-500",
             inView ? "opacity-80 translate-y-0" : "opacity-0 translate-y-10",
           )}
+          style={{ willChange: "transform, opacity" }}
         >
           Нам доверяют ведущие медицинские клиники
         </h2>
@@ -36,17 +36,21 @@ export default function Clients() {
             <div
               key={index}
               className={cn(
-                "w-32 h-32 bg-white/5 rounded-lg flex items-center justify-center p-4 transition-all duration-700",
+                "w-32 h-32 bg-white/5 rounded-lg flex items-center justify-center p-4 transition-opacity transition-transform duration-400",
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
               )}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              style={{ 
+                transitionDelay: `${Math.min(index * 75, 300)}ms`, 
+                willChange: "transform, opacity" 
+              }}
             >
               <Image
                 src={client.logo || "/placeholder.svg"}
                 alt={client.name}
                 width={100}
                 height={100}
-                className="opacity-70 hover:opacity-100 transition-opacity"
+                loading="lazy"
+                className="opacity-70 hover:opacity-100 transition-opacity duration-300"
               />
             </div>
           ))}
