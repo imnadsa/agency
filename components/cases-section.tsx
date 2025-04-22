@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useInView } from "react-intersection-observer"
 import { ArrowRight, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -20,9 +20,22 @@ type CaseStudyProps = {
   tags: string[]
   index: number
   isActive: boolean
+  isTransitioning: boolean
+  direction: "next" | "prev" | null
 }
 
-function CaseStudy({ image, logo, title, description, results, tags, index, isActive }: CaseStudyProps) {
+function CaseStudy({ 
+  image, 
+  logo, 
+  title, 
+  description, 
+  results, 
+  tags, 
+  index, 
+  isActive,
+  isTransitioning,
+  direction
+}: CaseStudyProps) {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -32,13 +45,23 @@ function CaseStudy({ image, logo, title, description, results, tags, index, isAc
     <div
       ref={ref}
       className={cn(
-        "grid grid-cols-1 lg:grid-cols-2 gap-8 items-center transition-all duration-500",
-    isActive 
-      ? "opacity-100 translate-x-0 relative z-10" 
-      : "opacity-0 translate-x-full absolute invisible",
-    inView ? "animate-fade-in" : "opacity-0",
+        "grid grid-cols-1 lg:grid-cols-2 gap-8 items-center absolute w-full transition-all",
+        isActive && !isTransitioning 
+          ? "opacity-100 translate-x-0 z-20 duration-500" 
+          : isActive && isTransitioning && direction === "next"
+            ? "opacity-0 -translate-x-full z-10 duration-300" 
+            : isActive && isTransitioning && direction === "prev"
+              ? "opacity-0 translate-x-full z-10 duration-300"
+              : !isActive && isTransitioning && direction === "next" && index === (direction === "next" ? 1 : -1)
+                ? "opacity-0 translate-x-full z-10 duration-0"
+                : !isActive && isTransitioning && direction === "prev" && index === (direction === "prev" ? -1 : 1)
+                  ? "opacity-0 -translate-x-full z-10 duration-0"
+                  : "opacity-0 translate-x-full invisible z-0 duration-0",
+        inView ? "animate-fade-in" : "opacity-0",
       )}
-      style={{ animationDelay: `${index * 0.2}s` }}
+      style={{ 
+        animationDelay: `${index * 0.2}s`,
+      }}
     >
       <div className="relative rounded-2xl overflow-hidden shadow-xl border border-white/10 h-[400px]">
         <Image src={image || "/placeholder.svg"} alt={title} fill className="object-cover" />
@@ -90,6 +113,9 @@ function CaseStudy({ image, logo, title, description, results, tags, index, isAc
 
 export default function CasesSection() {
   const [activeCase, setActiveCase] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [direction, setDirection] = useState<"next" | "prev" | null>(null)
+  const [nextCaseIndex, setNextCaseIndex] = useState<number | null>(null)
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -137,12 +163,38 @@ export default function CasesSection() {
     },
   ]
 
+  // Переход к следующему кейсу с анимацией
+  const transitionToCase = (index: number, dir: "next" | "prev") => {
+    if (isTransitioning || index === activeCase) return
+    
+    setDirection(dir)
+    setIsTransitioning(true)
+    setNextCaseIndex(index)
+    
+    // Сначала скрываем текущий слайд
+    setTimeout(() => {
+      setActiveCase(index)
+      // Затем после короткой паузы завершаем переход
+      setTimeout(() => {
+        setIsTransitioning(false)
+        setNextCaseIndex(null)
+      }, 50)
+    }, 300) // Время для анимации исчезновения текущего слайда
+  }
+
   const nextCase = () => {
-    setActiveCase((prev) => (prev === caseStudies.length - 1 ? 0 : prev + 1))
+    const next = activeCase === caseStudies.length - 1 ? 0 : activeCase + 1
+    transitionToCase(next, "next")
   }
 
   const prevCase = () => {
-    setActiveCase((prev) => (prev === 0 ? caseStudies.length - 1 : prev - 1))
+    const prev = activeCase === 0 ? caseStudies.length - 1 : activeCase - 1
+    transitionToCase(prev, "prev")
+  }
+
+  const goToCase = (index: number) => {
+    const dir = index > activeCase ? "next" : "prev"
+    transitionToCase(index, dir)
   }
 
   return (
@@ -171,6 +223,7 @@ export default function CasesSection() {
               onClick={prevCase}
               size="icon"
               variant="outline"
+              disabled={isTransitioning}
               className="rounded-full border-white/20 hover:border-accent-cyan hover:bg-white/5"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -179,6 +232,7 @@ export default function CasesSection() {
               onClick={nextCase}
               size="icon"
               variant="outline"
+              disabled={isTransitioning}
               className="rounded-full border-white/20 hover:border-accent-cyan hover:bg-white/5"
             >
               <ArrowRight className="h-4 w-4" />
@@ -198,6 +252,8 @@ export default function CasesSection() {
               tags={caseStudy.tags}
               index={index}
               isActive={index === activeCase}
+              isTransitioning={isTransitioning}
+              direction={direction}
             />
           ))}
         </div>
@@ -206,7 +262,8 @@ export default function CasesSection() {
           {caseStudies.map((_, index) => (
             <button
               key={index}
-              onClick={() => setActiveCase(index)}
+              onClick={() => goToCase(index)}
+              disabled={isTransitioning}
               className={cn(
                 "w-3 h-3 rounded-full mx-1 transition-all",
                 index === activeCase ? "bg-primary scale-125" : "bg-white/30 hover:bg-white/50",
