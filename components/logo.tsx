@@ -15,9 +15,9 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
   return (
     <div className={`flex items-center ${className}`}>
       <div className="bg-primary text-white w-8 h-8 flex items-center justify-center rounded-md mr-2 text-lg font-bold">
-        H
+        eQ
       </div>
-      <span className="text-white font-bold text-xl">Hippocrat</span>
+      <span className="text-white font-bold text-xl">eQuality</span>
     </div>
   )
 }
