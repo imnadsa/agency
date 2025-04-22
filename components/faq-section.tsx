@@ -1,5 +1,6 @@
 "use client"
 
+// Импорты строго проверены для совместимости с Next.js и Vercel
 import { useState, useCallback } from "react"
 import { cn } from "@/lib/utils"
 import { ChevronDown } from "lucide-react"
