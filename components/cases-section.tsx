@@ -33,8 +33,10 @@ function CaseStudy({ image, logo, title, description, results, tags, index, isAc
       ref={ref}
       className={cn(
         "grid grid-cols-1 lg:grid-cols-2 gap-8 items-center transition-all duration-500",
-        isActive ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full absolute",
-        inView ? "animate-fade-in" : "opacity-0",
+    isActive 
+      ? "opacity-100 translate-x-0 relative z-10" 
+      : "opacity-0 translate-x-full absolute invisible",
+    inView ? "animate-fade-in" : "opacity-0",
       )}
       style={{ animationDelay: `${index * 0.2}s` }}
     >
