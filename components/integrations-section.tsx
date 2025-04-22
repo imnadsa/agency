@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useCallback } from "react"
 import { useInView } from "react-intersection-observer"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
@@ -12,6 +13,7 @@ type IntegrationCardProps = {
 }
 
 function IntegrationCard({ icon, name, description, index }: IntegrationCardProps) {
+  const [isHovered, setIsHovered] = useState(false)
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -21,16 +23,49 @@ function IntegrationCard({ icon, name, description, index }: IntegrationCardProp
     <div
       ref={ref}
       className={cn(
-        "bg-secondary border border-white/10 rounded-xl p-6 shadow-md hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 transition-all",
-        inView ? "animate-fade-in" : "opacity-0 translate-y-5",
+        "bg-secondary border border-white/10 rounded-xl p-6 transition-shadow transition-opacity transition-transform duration-300 relative overflow-hidden group",
+        isHovered ? "shadow-md shadow-primary/10 -translate-y-2" : "hover:shadow-sm",
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5",
       )}
-      style={{ animationDelay: `${index * 0.1}s` }}
+      style={{
+        transitionDelay: `${Math.min(index * 50, 400)}ms`,
+        willChange: "transform, opacity, box-shadow",
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex items-center mb-4">
-        <div className="text-3xl mr-3">{icon}</div>
-        <h3 className="text-lg font-bold text-white">{name}</h3>
+      {/* Градиентный фон при наведении */}
+      <div
+        className={cn(
+          "absolute inset-0 bg-gradient-to-br from-primary/10 to-accent-cyan/10 opacity-0 transition-opacity duration-250",
+          isHovered && "opacity-100",
+        )}
+        style={{ willChange: "opacity" }}
+      />
+
+      {/* Основной контент */}
+      <div className="relative z-10">
+        <div className="flex items-center mb-4">
+          <div
+            className={cn(
+              "text-3xl mr-3 transition-transform duration-200",
+              isHovered && "scale-110 rotate-3",
+            )}
+            style={{ willChange: "transform" }}
+          >
+            {icon}
+          </div>
+          <h3
+            className={cn(
+              "text-lg font-bold text-white transition-colors duration-200",
+              isHovered && "text-primary",
+            )}
+          >
+            {name}
+          </h3>
+        </div>
+        <p className="text-sm text-white/80">{description}</p>
       </div>
-      <p className="text-sm opacity-80 text-white">{description}</p>
     </div>
   )
 }
@@ -85,17 +120,25 @@ export default function IntegrationsSection() {
     },
   ]
 
+  const handleCardClick = useCallback((index: number) => {
+    // Можно добавить логику для обработки клика, если нужно
+  }, [])
+
   return (
-    <section id="integrations" className="py-24 relative overflow-hidden">
+    <section
+      id="integrations"
+      className="py-24 relative overflow-hidden bg-gradient-to-r from-primary/5 to-accent-cyan/5"
+    >
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="section-title-tag">Интеграции</span>
           <h2
             ref={ref}
             className={cn(
-              "text-3xl md:text-4xl font-bold mb-6 transition-all duration-700",
+              "text-3xl md:text-4xl font-bold mb-6 transition-opacity transition-transform duration-500",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
             )}
+            style={{ willChange: "transform, opacity" }}
           >
             Бесшовные <span className="text-primary">интеграции</span> с вашими системами
           </h2>
@@ -113,6 +156,7 @@ export default function IntegrationsSection() {
               name={integration.name}
               description={integration.description}
               index={index}
+              onClick={() => handleCardClick(index)}
             />
           ))}
         </div>
@@ -120,13 +164,33 @@ export default function IntegrationsSection() {
         <div
           ref={ref}
           className={cn(
-            "mt-20 bg-secondary border border-white/10 rounded-2xl p-8 shadow-lg relative overflow-hidden",
-            inView ? "animate-fade-in" : "opacity-0",
+            "mt-20 bg-secondary border border-white/10 rounded-2xl p-8 transition-shadow transition-opacity transition-transform duration-300 relative overflow-hidden",
+            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5",
+            "hover:shadow-md hover:shadow-primary/10 hover:-translate-y-2",
           )}
+          style={{
+            transitionDelay: `${Math.min(0 * 50, 400)}ms`,
+            willChange: "transform, opacity, box-shadow",
+          }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          {/* Градиентный фон при наведении */}
+          <div
+            className={cn(
+              "absolute inset-0 bg-gradient-to-br from-primary/10 to-accent-cyan/10 opacity-0 transition-opacity duration-250 group-hover:opacity-100",
+            )}
+            style={{ willChange: "opacity" }}
+          />
+
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
-              <h3 className="text-2xl font-bold mb-4 text-white">Индивидуальные интеграции</h3>
+              <h3
+                className={cn(
+                  "text-2xl font-bold mb-4 text-white transition-colors duration-200",
+                  "group-hover:text-primary",
+                )}
+              >
+                Индивидуальные интеграции
+              </h3>
               <p className="mb-6 text-white/80">
                 Если вы используете специфическое программное обеспечение, которого нет в списке, не беспокойтесь. Наша
                 команда разработчиков создаст индивидуальное решение для интеграции с любой системой.
@@ -150,15 +214,19 @@ export default function IntegrationsSection() {
                 src="/placeholder.svg?height=300&width=400"
                 alt="Индивидуальные интеграции"
                 fill
-                className="object-contain"
+                className={cn(
+                  "object-contain transition-transform duration-200",
+                  "group-hover:scale-105",
+                )}
+                style={{ willChange: "transform" }}
               />
             </div>
           </div>
-
-          {/* Декоративные элементы */}
-          <div className="absolute top-0 right-0 w-40 h-40 bg-primary opacity-10 rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
-          <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent-cyan opacity-10 rounded-full transform -translate-x-1/2 translate-y-1/2"></div>
         </div>
+
+        {/* Декоративные элементы */}
+        <div className="absolute top-1/3 left-0 w-64 h-64 bg-primary/5 rounded-full filter blur-3xl opacity-70 -z-10"></div>
+        <div className="absolute bottom-1/3 right-0 w-80 h-80 bg-accent-cyan/5 rounded-full filter blur-3xl opacity-70 -z-10"></div>
       </div>
     </section>
   )
