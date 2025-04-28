@@ -128,22 +128,22 @@ export default function Services() {
       logos: (
         <>
           <img
-            src="/icons/Group.png"
+            src="/targetVK.png" // Обновлено с /icons/Group.png
             alt="VK"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <img
-            src="/icons/Group 7.png"
+            src="/targetAV.png" // Обновлено с /icons/Group 7.png
             alt="MT"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <img
-            src="/icons/nu иконки.png"
+            src="/targetTG.png" // Обновлено с /icons/nu-ikony.png
             alt="TG"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <img
-            src="/icons/Clip path group.png"
+            src="/targetMT.png" // Обновлено с /icons/Clip-path-group.png
             alt="OK"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
@@ -162,12 +162,12 @@ export default function Services() {
       logos: (
         <>
           <img
-            src="/icons/saitTD.png"
+            src="/saitTD.png" // Убрано /icons/
             alt="Sait TD"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <img
-            src="/icons/saitFG.png"
+            src="/saitFG.png" // Убрано /icons/
             alt="Sait FG"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
@@ -186,12 +186,12 @@ export default function Services() {
       logos: (
         <>
           <img
-            src="/icons/smmGPT.png"
+            src="/smmGPT.png" // Убрано /icons/
             alt="SMM GPT"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <img
-            src="/icons/smmPLANER.png"
+            src="/smmPLANER.png" // Убрано /icons/
             alt="SMM Planer"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
@@ -210,7 +210,7 @@ export default function Services() {
       logos: (
         <>
           <img
-            src="/icons/kontekstYA.png"
+            src="/kontekstYA.png" // Убрано /icons/
             alt="Kontekst YA"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
@@ -229,7 +229,7 @@ export default function Services() {
       logos: (
         <>
           <img
-            src="/icons/aiN8N.png"
+            src="/aiN8N.png" // Убрано /icons/
             alt="AI N8N"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
