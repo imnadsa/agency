@@ -11,8 +11,7 @@ export default function Hero() {
   })
   
   const [isLoaded, setIsLoaded] = useState(false)
-  const [typedText, setTypedText] = useState("")
-  const [wordIndex, setWordIndex] = useState(0)
+  const [currentWord, setCurrentWord] = useState("Реклама")
   
   const words = ["Реклама", "SMM", "Автоматизация", "Дизайн", "AI-решения"]
   
@@ -24,51 +23,23 @@ export default function Hero() {
     return () => clearTimeout(timer)
   }, [])
   
+  // Простая анимация смены слов без эффекта печатания
   useEffect(() => {
     if (!isLoaded || !inView) return
     
-    let currentIndex = 0
-    let isDeleting = false
-    let currentWord = words[wordIndex]
+    let index = 0
     
-    // Функция для анимации текста
-    const typeEffect = () => {
-      // Текущее слово из списка
-      currentWord = words[wordIndex]
-      
-      if (isDeleting) {
-        // Удаление символов
-        setTypedText(currentWord.substring(0, currentIndex - 1))
-        currentIndex--
-      } else {
-        // Добавление символов
-        setTypedText(currentWord.substring(0, currentIndex + 1))
-        currentIndex++
-      }
-      
-      // Скорость печати/удаления
-      let typeSpeed = isDeleting ? 50 : 100
-      
-      // Если закончили печатать слово
-      if (!isDeleting && currentIndex === currentWord.length) {
-        // Пауза в конце слова
-        typeSpeed = 2000
-        isDeleting = true
-      } else if (isDeleting && currentIndex === 0) {
-        // Переход к следующему слову
-        isDeleting = false
-        setWordIndex((prevIndex) => (prevIndex + 1) % words.length)
-      }
-      
-      // Следующий шаг анимации
-      setTimeout(typeEffect, typeSpeed)
+    // Функция для смены слова целиком
+    const changeWord = () => {
+      index = (index + 1) % words.length
+      setCurrentWord(words[index])
     }
     
-    // Запускаем анимацию
-    const timerId = setTimeout(typeEffect, 1000)
+    // Смена слов каждые 3 секунды
+    const intervalId = setInterval(changeWord, 3000)
     
-    return () => clearTimeout(timerId)
-  }, [isLoaded, inView, wordIndex, words])
+    return () => clearInterval(intervalId)
+  }, [isLoaded, inView, words])
   
   return (
     <section className="relative pt-32 pb-24 overflow-hidden">
@@ -110,10 +81,12 @@ export default function Hero() {
               <br className="md:hidden" />
               <span className="block mt-2 md:mt-4 min-h-[60px]">
                 <span className={cn(
-                  "inline-block text-primary transition-transform duration-1000 delay-700",
+                  "inline-block transition-transform duration-1000 delay-700",
                   (inView && isLoaded) ? "translate-y-0" : "translate-y-full"
-                )}>
-                  {typedText}<span className="typing-cursor"></span>
+                )}
+                style={{ color: "#02FFFF" }}
+                >
+                  {currentWord}
                 </span>
               </span>
             </h1>
