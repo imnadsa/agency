@@ -137,6 +137,12 @@ const VkIcon = () => (
   </svg>
 );
 
+export default function Services() {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
+
   const services = [
     {
       title: "Таргетированная реклама",
