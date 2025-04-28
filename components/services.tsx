@@ -271,7 +271,7 @@ export default function Services() {
 
         {/* Кнопка внизу */}
         <div className="mt-12 text-center">
-          
+          <a
             href="#contact"
             className={cn(
               "inline-flex items-center justify-center h-10 px-6 py-2 bg-primary text-white rounded-lg transition-colors duration-200",
