@@ -11,11 +11,10 @@ export default function Hero() {
   })
   
   const [isLoaded, setIsLoaded] = useState(false)
-  const [currentWordIndex, setCurrentWordIndex] = useState(0)
-  const [displayedWord, setDisplayedWord] = useState("")
-  const [typing, setTyping] = useState(true)
+  const [typedText, setTypedText] = useState("")
+  const [wordIndex, setWordIndex] = useState(0)
   
-  const changingWords = ["Реклама", "SMM", "Автоматизация", "Дизайн", "AI-решения"]
+  const words = ["Реклама", "SMM", "Автоматизация", "Дизайн", "AI-решения"]
   
   useEffect(() => {
     // Имитируем загрузку всех ресурсов перед запуском анимации
@@ -25,41 +24,51 @@ export default function Hero() {
     return () => clearTimeout(timer)
   }, [])
   
-  // Эффект для анимации печатания и стирания текста
   useEffect(() => {
     if (!isLoaded || !inView) return
     
-    // Если сейчас фаза печатания
-    if (typing) {
-      if (displayedWord === changingWords[currentWordIndex]) {
-        // Слово напечатано полностью, ждем и начинаем стирать
-        const timeout = setTimeout(() => {
-          setTyping(false)
-        }, 2000) // 2 секунды слово отображается полностью
-        return () => clearTimeout(timeout)
+    let currentIndex = 0
+    let isDeleting = false
+    let currentWord = words[wordIndex]
+    
+    // Функция для анимации текста
+    const typeEffect = () => {
+      // Текущее слово из списка
+      currentWord = words[wordIndex]
+      
+      if (isDeleting) {
+        // Удаление символов
+        setTypedText(currentWord.substring(0, currentIndex - 1))
+        currentIndex--
+      } else {
+        // Добавление символов
+        setTypedText(currentWord.substring(0, currentIndex + 1))
+        currentIndex++
       }
       
-      // Печатаем следующую букву
-      const timeout = setTimeout(() => {
-        setDisplayedWord(changingWords[currentWordIndex].substring(0, displayedWord.length + 1))
-      }, 100) // скорость печатания
-      return () => clearTimeout(timeout)
-    } else {
-      // Если сейчас фаза стирания
-      if (displayedWord === "") {
-        // Слово стерто полностью, переходим к следующему слову
-        setTyping(true)
-        setCurrentWordIndex((currentWordIndex + 1) % changingWords.length)
-        return
+      // Скорость печати/удаления
+      let typeSpeed = isDeleting ? 50 : 100
+      
+      // Если закончили печатать слово
+      if (!isDeleting && currentIndex === currentWord.length) {
+        // Пауза в конце слова
+        typeSpeed = 2000
+        isDeleting = true
+      } else if (isDeleting && currentIndex === 0) {
+        // Переход к следующему слову
+        isDeleting = false
+        setWordIndex((prevIndex) => (prevIndex + 1) % words.length)
       }
       
-      // Стираем буквы
-      const timeout = setTimeout(() => {
-        setDisplayedWord(displayedWord.substring(0, displayedWord.length - 1))
-      }, 50) // скорость стирания
-      return () => clearTimeout(timeout)
+      // Следующий шаг анимации
+      setTimeout(typeEffect, typeSpeed)
     }
-  }, [isLoaded, displayedWord, currentWordIndex, typing, changingWords, inView])
+    
+    // Запускаем анимацию
+    const timerId = setTimeout(typeEffect, 1000)
+    
+    return () => clearTimeout(timerId)
+  }, [isLoaded, inView, wordIndex, words])
   
   return (
     <section className="relative pt-32 pb-24 overflow-hidden">
@@ -99,12 +108,12 @@ export default function Hero() {
                 </span>
               </span>
               <br className="md:hidden" />
-              <span className="block mt-2 md:mt-4 min-h-[1.5em]">
+              <span className="block mt-2 md:mt-4 min-h-[60px]">
                 <span className={cn(
                   "inline-block text-primary transition-transform duration-1000 delay-700",
                   (inView && isLoaded) ? "translate-y-0" : "translate-y-full"
                 )}>
-                  {displayedWord}<span className="animate-typing-cursor">|</span>
+                  {typedText}<span className="typing-cursor"></span>
                 </span>
               </span>
             </h1>
@@ -157,15 +166,15 @@ export default function Hero() {
       
       {/* Добавляем стили для анимации частиц */}
       <style jsx>{`
-        @keyframes float {
-          0% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(5deg); }
-          100% { transform: translateY(0px) rotate(0deg); }
-        }
-        
         @keyframes float-slow {
           0% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-30px) rotate(-8deg); }
+          100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        @keyframes float {
+          0% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(5deg); }
           100% { transform: translateY(0px) rotate(0deg); }
         }
         
