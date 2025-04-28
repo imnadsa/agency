@@ -76,7 +76,7 @@ function ServiceCard({ icon, title, description, index, logos, features, onClick
 
             {/* Логотипы */}
             {logos && (
-              <div className="flex flex-wrap gap-3 mt-4 mb-2">
+              <div className="flex flex-nowrap gap-3 mt-4 mb-2 overflow-x-auto">
                 {logos}
               </div>
             )}
