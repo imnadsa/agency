@@ -176,11 +176,6 @@ export default function Services() {
             alt="SMM GPT"
             className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
-          <img
-            src="/smmPLANER.png"
-            alt="SMM Planer"
-            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
-          />
         </>
       ),
     },
