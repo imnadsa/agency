@@ -14,9 +14,8 @@ export default function Hero() {
   const [displayText, setDisplayText] = useState("")
   const wordsRef = useRef(["Реклама", "AI-решения", "SMM", "Автоматизация", "Дизайн"])
   const currentIndexRef = useRef(0)
-  const charIndexRef = useRef(0)
-  const isDeletingRef = useRef(false)
-  const typingSpeedRef = useRef(150)
+  const isTypingRef = useRef(true)
+  const delayTimerRef = useRef(null)
   
   // Используем requestAnimationFrame для более эффективной анимации
   useEffect(() => {
@@ -30,44 +29,45 @@ export default function Hero() {
   useEffect(() => {
     if (!isLoaded || !inView) return
     
-    let rafId: number
-
-    const typeWriter = () => {
+    const typeNextWord = () => {
       const currentWord = wordsRef.current[currentIndexRef.current]
       
-      if (!isDeletingRef.current) {
-        // Добавляем символ
-        setDisplayText(currentWord.substring(0, charIndexRef.current + 1))
-        charIndexRef.current += 1
-        
-        // Если слово напечатано полностью
-        if (charIndexRef.current === currentWord.length) {
-          isDeletingRef.current = true
-          typingSpeedRef.current = 3000 // Пауза 3 секунды перед стиранием
-        }
-      } else {
-        // Удаляем символ
-        setDisplayText(currentWord.substring(0, charIndexRef.current - 1))
-        charIndexRef.current -= 1
-        
-        // Если слово стерто полностью
-        if (charIndexRef.current === 0) {
-          isDeletingRef.current = false
-          currentIndexRef.current = (currentIndexRef.current + 1) % wordsRef.current.length
-          typingSpeedRef.current = 100 // Скорость печатания
-        }
+      if (isTypingRef.current) {
+        // Печатаем слово посимвольно
+        let charIndex = 0
+        const typingInterval = setInterval(() => {
+          charIndex++
+          setDisplayText(currentWord.substring(0, charIndex))
+          
+          if (charIndex === currentWord.length) {
+            clearInterval(typingInterval)
+            isTypingRef.current = false
+            
+            // Ждем 3 секунды после напечатания
+            delayTimerRef.current = setTimeout(() => {
+              // Моментально стираем слово
+              setDisplayText("")
+              
+              // Меняем индекс слова
+              currentIndexRef.current = (currentIndexRef.current + 1) % wordsRef.current.length
+              isTypingRef.current = true
+              
+              // Начинаем печатать следующее слово
+              setTimeout(typeNextWord, 500)
+            }, 3000)
+          }
+        }, 100)
       }
-      
-      // Планируем следующее обновление через определенный интервал
-      rafId = window.setTimeout(typeWriter, typingSpeedRef.current)
     }
     
     // Запускаем анимацию
-    rafId = window.setTimeout(typeWriter, 1000)
+    typeNextWord()
     
     // Очистка при размонтировании
     return () => {
-      if (rafId) window.clearTimeout(rafId)
+      if (delayTimerRef.current) {
+        clearTimeout(delayTimerRef.current)
+      }
     }
   }, [isLoaded, inView])
   
