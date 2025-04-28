@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { useInView } from "react-intersection-observer"
 import { cn } from "@/lib/utils"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
 export default function Hero() {
   const { ref, inView } = useInView({
@@ -11,49 +11,77 @@ export default function Hero() {
   })
   
   const [isLoaded, setIsLoaded] = useState(false)
-  const [currentWord, setCurrentWord] = useState("Реклама")
+  const [displayText, setDisplayText] = useState("")
+  const wordsRef = useRef(["Реклама", "AI-решения", "SMM", "Автоматизация", "Дизайн"])
+  const currentIndexRef = useRef(0)
+  const charIndexRef = useRef(0)
+  const isDeletingRef = useRef(false)
+  const typingSpeedRef = useRef(150)
   
-  const words = ["Реклама", "SMM", "Автоматизация", "Дизайн", "AI-решения"]
-  
+  // Используем requestAnimationFrame для более эффективной анимации
   useEffect(() => {
-    // Имитируем загрузку всех ресурсов перед запуском анимации
+    // Имитируем загрузку ресурсов
     const timer = setTimeout(() => {
       setIsLoaded(true)
-    }, 100) // Короткая задержка
+    }, 100)
     return () => clearTimeout(timer)
   }, [])
   
-  // Простая анимация смены слов без эффекта печатания
   useEffect(() => {
     if (!isLoaded || !inView) return
     
-    let index = 0
-    
-    // Функция для смены слова целиком
-    const changeWord = () => {
-      index = (index + 1) % words.length
-      setCurrentWord(words[index])
+    let rafId: number
+
+    const typeWriter = () => {
+      const currentWord = wordsRef.current[currentIndexRef.current]
+      
+      if (!isDeletingRef.current) {
+        // Добавляем символ
+        setDisplayText(currentWord.substring(0, charIndexRef.current + 1))
+        charIndexRef.current += 1
+        
+        // Если слово напечатано полностью
+        if (charIndexRef.current === currentWord.length) {
+          isDeletingRef.current = true
+          typingSpeedRef.current = 150 // Пауза перед стиранием
+        }
+      } else {
+        // Удаляем символ
+        setDisplayText(currentWord.substring(0, charIndexRef.current - 1))
+        charIndexRef.current -= 1
+        
+        // Если слово стерто полностью
+        if (charIndexRef.current === 0) {
+          isDeletingRef.current = false
+          currentIndexRef.current = (currentIndexRef.current + 1) % wordsRef.current.length
+          typingSpeedRef.current = 100 // Скорость печатания
+        }
+      }
+      
+      // Планируем следующее обновление через определенный интервал
+      rafId = window.setTimeout(typeWriter, typingSpeedRef.current)
     }
     
-    // Смена слов каждые 3 секунды
-    const intervalId = setInterval(changeWord, 3000)
+    // Запускаем анимацию
+    rafId = window.setTimeout(typeWriter, 1000)
     
-    return () => clearInterval(intervalId)
-  }, [isLoaded, inView, words])
+    // Очистка при размонтировании
+    return () => {
+      if (rafId) window.clearTimeout(rafId)
+    }
+  }, [isLoaded, inView])
   
   return (
     <section className="relative pt-32 pb-24 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-radial z-[-1]"></div>
       <div className="container px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          {/* Основной заголовок с улучшенной анимацией */}
           <div
             ref={ref}
             className={cn(
               "transition-opacity transition-transform duration-700",
               (inView && isLoaded) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
             )}
-            style={{ willChange: "transform, opacity" }}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               <span className="inline-block overflow-hidden">
@@ -80,13 +108,14 @@ export default function Hero() {
               </span>
               <br className="md:hidden" />
               <span className="block mt-2 md:mt-4 min-h-[60px]">
-                <span className={cn(
-                  "inline-block transition-transform duration-1000 delay-700",
-                  (inView && isLoaded) ? "translate-y-0" : "translate-y-full"
-                )}
-                style={{ color: "#02FFFF" }}
+                <span 
+                  className={cn(
+                    "inline-block transition-transform duration-1000 delay-700",
+                    (inView && isLoaded) ? "translate-y-0" : "translate-y-full"
+                  )}
+                  style={{ color: "#02FFFF" }}
                 >
-                  {currentWord}
+                  {displayText}<span className="typing-cursor">|</span>
                 </span>
               </span>
             </h1>
@@ -137,7 +166,7 @@ export default function Hero() {
         ></div>
       </div>
       
-      {/* Добавляем стили для анимации частиц */}
+      {/* Добавляем стили для анимации частиц и мигающего курсора */}
       <style jsx>{`
         @keyframes float-slow {
           0% { transform: translateY(0px) rotate(0deg); }
@@ -155,6 +184,20 @@ export default function Hero() {
           0% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-15px) rotate(10deg); }
           100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        .typing-cursor {
+          display: inline-block;
+          width: 2px;
+          height: 1em;
+          background-color: #02FFFF;
+          margin-left: 2px;
+          animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+          from, to { opacity: 1; }
+          50% { opacity: 0; }
         }
       `}</style>
     </section>
