@@ -1,7 +1,7 @@
-import Link from "next/link"
-import { ArrowUp } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Logo from "@/components/logo"
+import Link from "next/link";
+import { ArrowUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Logo from "@/components/logo";
 
 export default function Footer() {
   return (
@@ -31,9 +31,6 @@ export default function Footer() {
               <Link
                 href="#"
                 className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 text-white text-sm transition-all hover:bg-primary hover:border-transparent"
-              >
-                YT
-              </Link>
             </div>
           </div>
 
@@ -102,21 +99,21 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-bold mb-6 text-white">Контакты</h4>
             <ul className="space-y-4">
-              <li className="opacity-70">Москва, ул. Инновационная, 42</li>
+              <li className="opacity-70">Москва, ул. Севастопольский пр-кт</li>
               <li>
-                
-                  href="tel:+74951234567"
+                <a
+                  href="tel:+79771004419"
                   className="opacity-70 hover:opacity-100 hover:text-accent-cyan transition-all"
                 >
-                  +7 (495) 123-45-67
+                  +7 (977) 100-44-19
                 </a>
               </li>
               <li>
-                
-                  href="mailto:info@hippocrat.ru"
+                <a
+                  href="mailto:antoshkin.info@bk.ru"
                   className="opacity-70 hover:opacity-100 hover:text-accent-cyan transition-all"
                 >
-                  info@hippocrat.ru
+                  antoshkin.info@bk.ru
                 </a>
               </li>
               <li className="opacity-70">Пн-Пт: 9:00 - 18:00</li>
@@ -147,5 +144,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
