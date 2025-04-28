@@ -131,30 +131,22 @@ export default function Services() {
           <Image
             src="/icons/Group.png"
             alt="VK"
-            width={50}
-            height={50}
-            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <Image
             src="/icons/Group 7.png"
             alt="MT"
-            width={50}
-            height={50}
-            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <Image
             src="/icons/nu иконки.png"
             alt="TG"
-            width={50}
-            height={50}
-            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <Image
             src="/icons/Clip path group.png"
             alt="OK"
-            width={50}
-            height={50}
-            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
         </>
       ),
@@ -173,16 +165,12 @@ export default function Services() {
           <Image
             src="/icons/saitTD.png"
             alt="Sait TD"
-            width={50}
-            height={50}
-            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <Image
             src="/icons/saitFG.png"
             alt="Sait FG"
-            width={50}
-            height={50}
-            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
         </>
       ),
@@ -201,16 +189,12 @@ export default function Services() {
           <Image
             src="/icons/smmGPT.png"
             alt="SMM GPT"
-            width={50}
-            height={50}
-            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <Image
             src="/icons/smmPLANER.png"
             alt="SMM Planer"
-            width={50}
-            height={50}
-            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
         </>
       ),
@@ -229,9 +213,7 @@ export default function Services() {
           <Image
             src="/icons/kontekstYA.png"
             alt="Kontekst YA"
-            width={50}
-            height={50}
-            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
         </>
       ),
@@ -250,9 +232,7 @@ export default function Services() {
           <Image
             src="/icons/aiN8N.png"
             alt="AI N8N"
-            width={50}
-            height={50}
-            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
         </>
       ),
