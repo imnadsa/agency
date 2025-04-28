@@ -11,6 +11,11 @@ export default function Hero() {
   })
   
   const [isLoaded, setIsLoaded] = useState(false)
+  const [currentWordIndex, setCurrentWordIndex] = useState(0)
+  const [displayedWord, setDisplayedWord] = useState("")
+  const [typing, setTyping] = useState(true)
+  
+  const changingWords = ["Реклама", "SMM", "Автоматизация", "Дизайн", "AI-решения"]
   
   useEffect(() => {
     // Имитируем загрузку всех ресурсов перед запуском анимации
@@ -19,6 +24,42 @@ export default function Hero() {
     }, 100) // Короткая задержка
     return () => clearTimeout(timer)
   }, [])
+  
+  // Эффект для анимации печатания и стирания текста
+  useEffect(() => {
+    if (!isLoaded || !inView) return
+    
+    // Если сейчас фаза печатания
+    if (typing) {
+      if (displayedWord === changingWords[currentWordIndex]) {
+        // Слово напечатано полностью, ждем и начинаем стирать
+        const timeout = setTimeout(() => {
+          setTyping(false)
+        }, 2000) // 2 секунды слово отображается полностью
+        return () => clearTimeout(timeout)
+      }
+      
+      // Печатаем следующую букву
+      const timeout = setTimeout(() => {
+        setDisplayedWord(changingWords[currentWordIndex].substring(0, displayedWord.length + 1))
+      }, 100) // скорость печатания
+      return () => clearTimeout(timeout)
+    } else {
+      // Если сейчас фаза стирания
+      if (displayedWord === "") {
+        // Слово стерто полностью, переходим к следующему слову
+        setTyping(true)
+        setCurrentWordIndex((currentWordIndex + 1) % changingWords.length)
+        return
+      }
+      
+      // Стираем буквы
+      const timeout = setTimeout(() => {
+        setDisplayedWord(displayedWord.substring(0, displayedWord.length - 1))
+      }, 50) // скорость стирания
+      return () => clearTimeout(timeout)
+    }
+  }, [isLoaded, displayedWord, currentWordIndex, typing, changingWords, inView])
   
   return (
     <section className="relative pt-32 pb-24 overflow-hidden">
@@ -58,12 +99,12 @@ export default function Hero() {
                 </span>
               </span>
               <br className="md:hidden" />
-              <span className="block mt-2 md:mt-4 overflow-hidden">
+              <span className="block mt-2 md:mt-4 min-h-[1.5em]">
                 <span className={cn(
-                  "inline-block transition-transform duration-1000 delay-700",
+                  "inline-block text-primary transition-transform duration-1000 delay-700",
                   (inView && isLoaded) ? "translate-y-0" : "translate-y-full"
                 )}>
-                  реклама, автоматизация, дизайн
+                  {displayedWord}<span className="animate-typing-cursor">|</span>
                 </span>
               </span>
             </h1>
