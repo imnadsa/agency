@@ -1,6 +1,6 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { ArrowUp } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import Logo from "@/components/logo"
 
 export default function Footer() {
@@ -104,7 +104,7 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="opacity-70">Москва, ул. Инновационная, 42</li>
               <li>
-                <a
+                
                   href="tel:+74951234567"
                   className="opacity-70 hover:opacity-100 hover:text-accent-cyan transition-all"
                 >
@@ -112,7 +112,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a
+                
                   href="mailto:info@hippocrat.ru"
                   className="opacity-70 hover:opacity-100 hover:text-accent-cyan transition-all"
                 >
@@ -125,7 +125,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10">
-          <div className="text-sm opacity-60 mb-4 md:mb-0">© 2024 Hippocrat. Все права защищены.</div>
+          <div className="text-sm opacity-60 mb-4 md:mb-0">© {new Date().getFullYear()} eQuality. Все права защищены.</div>
           <div className="flex gap-6 text-sm">
             <Link href="#" className="opacity-60 hover:opacity-100 transition-all">
               Политика конфиденциальности
