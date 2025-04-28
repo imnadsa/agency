@@ -128,10 +128,42 @@ export default function Services() {
       ],
       logos: (
         <>
-          <Image src="/Group.png" alt="VK" width={50} height={50} className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3" />
-          <Image src="/Group 7.png" alt="MT" width={50} height={50} className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3" />
-          <Image src="/nu иконки.png" alt="TG" width={50} height={50} className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3" />
-          <Image src="/Clip path group.png" alt="OK" width={50} height={50} className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3" />
+          <Image
+            src="/targetVK.png"
+            alt="Target VK"
+            width={96}
+            height={96}
+            quality={100}
+            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            style={{ imageRendering: "auto" }}
+          />
+          <Image
+            src="/targetAV.png"
+            alt="Target AV"
+            width={96}
+            height={96}
+            quality={100}
+            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            style={{ imageRendering: "auto" }}
+          />
+          <Image
+            src="/targetTG.png"
+            alt="Target TG"
+            width={96}
+            height={96}
+            quality={100}
+            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            style={{ imageRendering: "auto" }}
+          />
+          <Image
+            src="/targetMT.png"
+            alt="Target MT"
+            width={96}
+            height={96}
+            quality={100}
+            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            style={{ imageRendering: "auto" }}
+          />
         </>
       ),
     },
@@ -144,7 +176,28 @@ export default function Services() {
         "Интеграция с CRM и МИС системами",
         "SEO-оптимизация и быстрая загрузка",
       ],
-      logos: null,
+      logos: (
+        <>
+          <Image
+            src="/saitTD.png"
+            alt="Sait TD"
+            width={96}
+            height={96}
+            quality={100}
+            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            style={{ imageRendering: "auto" }}
+          />
+          <Image
+            src="/saitFG.png"
+            alt="Sait FG"
+            width={96}
+            height={96}
+            quality={100}
+            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            style={{ imageRendering: "auto" }}
+          />
+        </>
+      ),
     },
     {
       title: "SMM-продвижение",
@@ -155,7 +208,28 @@ export default function Services() {
         "Вовлекающие публикации и сторис",
         "Работа с репутацией в комментариях",
       ],
-      logos: null,
+      logos: (
+        <>
+          <Image
+            src="/smmGPT.png"
+            alt="SMM GPT"
+            width={96}
+            height={96}
+            quality={100}
+            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            style={{ imageRendering: "auto" }}
+          />
+          <Image
+            src="/smmPLANER.png"
+            alt="SMM Planer"
+            width={96}
+            height={96}
+            quality={100}
+            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            style={{ imageRendering: "auto" }}
+          />
+        </>
+      ),
     },
     {
       title: "Контекстная реклама",
@@ -166,7 +240,19 @@ export default function Services() {
         "A/B тестирование объявлений",
         "Оптимизация ставок и бюджета",
       ],
-      logos: null,
+      logos: (
+        <>
+          <Image
+            src="/kontekstYA.png"
+            alt="Kontekst YA"
+            width={96}
+            height={96}
+            quality={100}
+            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            style={{ imageRendering: "auto" }}
+          />
+        </>
+      ),
     },
     {
       title: "ИИ-автоматизация",
@@ -177,7 +263,19 @@ export default function Services() {
         "Автоматизация документооборота",
         "Предиктивная аналитика пациентопотока",
       ],
-      logos: null,
+      logos: (
+        <>
+          <Image
+            src="/aiN8N.png"
+            alt="AI N8N"
+            width={96}
+            height={96}
+            quality={100}
+            className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            style={{ imageRendering: "auto" }}
+          />
+        </>
+      ),
     },
   ]
 
