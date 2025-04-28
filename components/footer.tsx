@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -31,6 +33,9 @@ export default function Footer() {
               <Link
                 href="#"
                 className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 text-white text-sm transition-all hover:bg-primary hover:border-transparent"
+              >
+                {/* Добавьте текст или иконку, если нужно */}
+              </Link>
             </div>
           </div>
 
