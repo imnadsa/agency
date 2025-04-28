@@ -4,7 +4,6 @@ import { useState, useCallback } from "react"
 import { useInView } from "react-intersection-observer"
 import { ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
-import Image from "next/image"
 
 type ServiceCardProps = {
   icon?: string
@@ -128,22 +127,22 @@ export default function Services() {
       ],
       logos: (
         <>
-          <Image
+          <img
             src="/icons/Group.png"
             alt="VK"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
-          <Image
+          <img
             src="/icons/Group 7.png"
             alt="MT"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
-          <Image
+          <img
             src="/icons/nu иконки.png"
             alt="TG"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
-          <Image
+          <img
             src="/icons/Clip path group.png"
             alt="OK"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
@@ -162,12 +161,12 @@ export default function Services() {
       ],
       logos: (
         <>
-          <Image
+          <img
             src="/icons/saitTD.png"
             alt="Sait TD"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
-          <Image
+          <img
             src="/icons/saitFG.png"
             alt="Sait FG"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
@@ -186,12 +185,12 @@ export default function Services() {
       ],
       logos: (
         <>
-          <Image
+          <img
             src="/icons/smmGPT.png"
             alt="SMM GPT"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
-          <Image
+          <img
             src="/icons/smmPLANER.png"
             alt="SMM Planer"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
@@ -210,7 +209,7 @@ export default function Services() {
       ],
       logos: (
         <>
-          <Image
+          <img
             src="/icons/kontekstYA.png"
             alt="Kontekst YA"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
@@ -229,7 +228,7 @@ export default function Services() {
       ],
       logos: (
         <>
-          <Image
+          <img
             src="/icons/aiN8N.png"
             alt="AI N8N"
             className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
