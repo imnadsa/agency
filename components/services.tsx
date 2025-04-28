@@ -4,6 +4,7 @@ import { useState, useCallback } from "react"
 import { useInView } from "react-intersection-observer"
 import { ArrowRight, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 type ServiceCardProps = {
   title: string
@@ -11,10 +12,10 @@ type ServiceCardProps = {
   index: number
   logos?: React.ReactNode
   features?: string[]
-  onClick?: () => void
+  href: string
 }
 
-function ServiceCard({ title, description, index, logos, features, onClick }: ServiceCardProps) {
+function ServiceCard({ title, description, index, logos, features, href }: ServiceCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -22,79 +23,80 @@ function ServiceCard({ title, description, index, logos, features, onClick }: Se
   })
 
   return (
-    <div
-      ref={ref}
-      className={cn(
-        "bg-secondary border border-white/10 rounded-2xl p-6 transition-shadow transition-opacity transition-transform duration-300 relative overflow-hidden group",
-        isHovered ? "shadow-md shadow-primary/10 -translate-y-2" : "hover:shadow-sm",
-        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5",
-      )}
-      style={{
-        transitionDelay: `${Math.min(index * 50, 400)}ms`,
-        willChange: "transform, opacity, box-shadow",
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={onClick}
-    >
-      {/* Градиентный фон при наведении */}
+    <Link href={href} className="block">
       <div
+        ref={ref}
         className={cn(
-          "absolute inset-0 bg-gradient-to-br from-primary/10 to-accent-cyan/10 opacity-0 transition-opacity duration-250",
-          isHovered && "opacity-100",
+          "bg-secondary border border-white/10 rounded-2xl p-6 transition-shadow transition-opacity transition-transform duration-300 relative overflow-hidden group cursor-pointer",
+          isHovered ? "shadow-md shadow-primary/10 -translate-y-2" : "hover:shadow-sm",
+          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5",
         )}
-        style={{ willChange: "opacity" }}
-      />
+        style={{
+          transitionDelay: `${Math.min(index * 50, 400)}ms`,
+          willChange: "transform, opacity, box-shadow",
+        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* Градиентный фон при наведении */}
+        <div
+          className={cn(
+            "absolute inset-0 bg-gradient-to-br from-primary/10 to-accent-cyan/10 opacity-0 transition-opacity duration-250",
+            isHovered && "opacity-100",
+          )}
+          style={{ willChange: "opacity" }}
+        />
 
-      {/* Основной контент */}
-      <div className="relative z-10">
-        <div className="flex justify-between items-start">
-          <div className="flex-1">
-            <h3
-              className={cn(
-                "text-2xl font-bold mb-4 text-white transition-colors duration-200",
-                isHovered && "text-primary",
+        {/* Основной контент */}
+        <div className="relative z-10">
+          <div className="flex justify-between items-start">
+            <div className="flex-1">
+              <h3
+                className={cn(
+                  "text-2xl font-bold mb-4 text-white transition-colors duration-200",
+                  isHovered && "text-primary",
+                )}
+              >
+                {title}
+              </h3>
+              <p className="text-white/80 mb-6 leading-relaxed">{description}</p>
+
+              {/* Список возможностей */}
+              {features && features.length > 0 && (
+                <ul className="space-y-3 mb-6">
+                  {features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center gap-3">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-accent-cyan/20 flex items-center justify-center">
+                        <Check className="w-4 h-4 text-accent-cyan" />
+                      </div>
+                      <span className="text-white/80 text-sm leading-relaxed">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               )}
-            >
-              {title}
-            </h3>
-            <p className="text-white/80 mb-6 leading-relaxed">{description}</p>
 
-            {/* Список возможностей */}
-            {features && features.length > 0 && (
-              <ul className="space-y-3 mb-6">
-                {features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center gap-3">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-accent-cyan/20 flex items-center justify-center">
-                      <Check className="w-4 h-4 text-accent-cyan" />
-                    </div>
-                    <span className="text-white/80 text-sm leading-relaxed">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
+              {/* Логотипы */}
+              {logos && (
+                <div className="flex flex-wrap gap-3 mt-4 mb-2">
+                  {logos}
+                </div>
+              )}
 
-            {/* Логотипы */}
-            {logos && (
-              <div className="flex flex-wrap gap-3 mt-4 mb-2">
-                {logos}
+              {/* CTA */}
+              <div
+                className={cn(
+                  "mt-6 inline-flex items-center text-sm font-medium text-accent-cyan opacity-0 transform translate-x-[-10px] transition-all duration-250",
+                  isHovered && "opacity-100 translate-x-0",
+                )}
+                style={{ willChange: "opacity, transform" }}
+              >
+                Подробнее <ArrowRight className="ml-1 w-4 h-4" />
               </div>
-            )}
-
-            {/* CTA */}
-            <div
-              className={cn(
-                "mt-6 inline-flex items-center text-sm font-medium text-accent-cyan opacity-0 transform translate-x-[-10px] transition-all duration-250",
-                isHovered && "opacity-100 translate-x-0",
-              )}
-              style={{ willChange: "opacity, transform" }}
-            >
-              Подробнее <ArrowRight className="ml-1 w-4 h-4" />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
@@ -113,6 +115,7 @@ export default function Services() {
         "Ретаргетинг и поиск похожих аудиторий",
         "Отслеживание конверсий и аналитика",
       ],
+      href: "/services/targeted",
       logos: (
         <>
           <img
@@ -146,6 +149,7 @@ export default function Services() {
         "Интеграция с CRM и МИС системами",
         "SEO-оптимизация и быстрая загрузка",
       ],
+      href: "/services/websites",
       logos: (
         <>
           <img
@@ -169,6 +173,7 @@ export default function Services() {
         "Вовлекающие публикации и сторис",
         "Работа с репутацией в комментариях",
       ],
+      href: "/services/smm",
       logos: (
         <>
           <img
@@ -187,6 +192,7 @@ export default function Services() {
         "A/B тестирование объявлений",
         "Оптимизация ставок и бюджета",
       ],
+      href: "/services/contextual",
       logos: (
         <>
           <img
@@ -205,12 +211,9 @@ export default function Services() {
         "Автоматизация документооборота",
         "Предиктивная аналитика пациентопотока",
       ],
+      href: "/services/ai-solutions",
     },
   ]
-
-  const handleCardClick = useCallback((index: number) => {
-    // Можно добавить логику для обработки клика, если нужно
-  }, [])
 
   return (
     <section
@@ -249,6 +252,7 @@ export default function Services() {
               index={0}
               logos={services[0].logos}
               features={services[0].features}
+              href={services[0].href}
             />
           </div>
 
@@ -260,14 +264,14 @@ export default function Services() {
               index={index + 1}
               logos={service.logos}
               features={service.features}
-              onClick={() => handleCardClick(index + 1)}
+              href={service.href}
             />
           ))}
         </div>
 
         {/* Кнопка внизу */}
         <div className="mt-12 text-center">
-          <a
+          
             href="#contact"
             className={cn(
               "inline-flex items-center justify-center h-10 px-6 py-2 bg-primary text-white rounded-lg transition-colors duration-200",
