@@ -43,7 +43,7 @@ export default function Hero() {
         // Если слово напечатано полностью
         if (charIndexRef.current === currentWord.length) {
           isDeletingRef.current = true
-          typingSpeedRef.current = 150 // Пауза перед стиранием
+          typingSpeedRef.current = 3000 // Пауза 3 секунды перед стиранием
         }
       } else {
         // Удаляем символ
@@ -115,7 +115,7 @@ export default function Hero() {
                   )}
                   style={{ color: "#02FFFF" }}
                 >
-                  {displayText}<span className="typing-cursor">|</span>
+                  {displayText}<span className="typing-cursor"></span>
                 </span>
               </span>
             </h1>
@@ -184,20 +184,6 @@ export default function Hero() {
           0% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-15px) rotate(10deg); }
           100% { transform: translateY(0px) rotate(0deg); }
-        }
-        
-        .typing-cursor {
-          display: inline-block;
-          width: 2px;
-          height: 1em;
-          background-color: #02FFFF;
-          margin-left: 2px;
-          animation: blink 1s step-end infinite;
-        }
-        
-        @keyframes blink {
-          from, to { opacity: 1; }
-          50% { opacity: 0; }
         }
       `}</style>
     </section>
