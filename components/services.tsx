@@ -190,11 +190,6 @@ export default function Services() {
             alt="SMM GPT"
             className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
-          <img
-            src="/smmPLANER.png"
-            alt="SMM Planer"
-            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
-          />
         </>
       ),
     },
@@ -226,15 +221,6 @@ export default function Services() {
         "Автоматизация документооборота",
         "Предиктивная аналитика пациентопотока",
       ],
-      logos: (
-        <>
-          <img
-            src="/aiN8N.png"
-            alt="AI N8N"
-            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
-          />
-        </>
-      ),
     },
   ]
 
