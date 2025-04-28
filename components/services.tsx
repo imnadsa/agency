@@ -2,11 +2,10 @@
 
 import { useState, useCallback } from "react"
 import { useInView } from "react-intersection-observer"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 type ServiceCardProps = {
-  icon?: string
   title: string
   description: string
   index: number
@@ -15,7 +14,7 @@ type ServiceCardProps = {
   onClick?: () => void
 }
 
-function ServiceCard({ icon, title, description, index, logos, features, onClick }: ServiceCardProps) {
+function ServiceCard({ title, description, index, logos, features, onClick }: ServiceCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -63,11 +62,13 @@ function ServiceCard({ icon, title, description, index, logos, features, onClick
 
             {/* Список возможностей */}
             {features && features.length > 0 && (
-              <ul className="space-y-2 mb-6">
+              <ul className="space-y-3 mb-6">
                 {features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <span className="text-accent-cyan mt-1 flex-shrink-0">✓</span>
-                    <span className="text-white/70">{feature}</span>
+                  <li key={idx} className="flex items-center gap-3">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-accent-cyan/20 flex items-center justify-center">
+                      <Check className="w-4 h-4 text-accent-cyan" />
+                    </div>
+                    <span className="text-white/80 text-sm leading-relaxed">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -91,18 +92,6 @@ function ServiceCard({ icon, title, description, index, logos, features, onClick
               Подробнее <ArrowRight className="ml-1 w-4 h-4" />
             </div>
           </div>
-
-          {icon && (
-            <div
-              className={cn(
-                "text-4xl bg-primary/20 p-4 rounded-xl text-accent-cyan transition-transform duration-200",
-                isHovered && "scale-110 rotate-3",
-              )}
-              style={{ willChange: "transform" }}
-            >
-              {icon}
-            </div>
-          )}
         </div>
       </div>
     </div>
@@ -119,7 +108,6 @@ export default function Services() {
     {
       title: "Таргетированная реклама",
       description: "Приводим целевых клиентов из социальных сетей по оптимальной стоимости, масштабируя ваш медицинский бизнес.",
-      icon: "🎯",
       features: [
         "Комплексные рекламные кампании",
         "Ретаргетинг и поиск похожих аудиторий",
@@ -153,7 +141,6 @@ export default function Services() {
     {
       title: "Разработка сайтов",
       description: "Создаем современные медицинские сайты с высокой конверсией, адаптированные для специфики вашей клиники.",
-      icon: "💻",
       features: [
         "Адаптивный дизайн для всех устройств",
         "Интеграция с CRM и МИС системами",
@@ -177,7 +164,6 @@ export default function Services() {
     {
       title: "SMM-продвижение",
       description: "Повышаем узнаваемость вашей клиники и формируем доверие аудитории через профессиональное ведение социальных сетей.",
-      icon: "📱",
       features: [
         "Контент-стратегия для медицинских услуг",
         "Вовлекающие публикации и сторис",
@@ -190,13 +176,17 @@ export default function Services() {
             alt="SMM GPT"
             className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
+          <img
+            src="/smmPLANER.png"
+            alt="SMM Planer"
+            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
+          />
         </>
       ),
     },
     {
       title: "Контекстная реклама",
       description: "Привлекаем пациентов точно в момент, когда они ищут медицинские услуги, обеспечивая высокую конверсию.",
-      icon: "🔍",
       features: [
         "Глубокий анализ ключевых слов",
         "A/B тестирование объявлений",
@@ -215,7 +205,6 @@ export default function Services() {
     {
       title: "ИИ-автоматизация",
       description: "Внедряем инновационные решения на базе искусственного интеллекта для оптимизации процессов вашей клиники.",
-      icon: "🤖",
       features: [
         "Чат-боты для записи и консультаций",
         "Автоматизация документооборота",
@@ -262,7 +251,6 @@ export default function Services() {
             <ServiceCard
               title={services[0].title}
               description={services[0].description}
-              icon={services[0].icon}
               index={0}
               logos={services[0].logos}
               features={services[0].features}
@@ -274,7 +262,6 @@ export default function Services() {
               key={index + 1}
               title={service.title}
               description={service.description}
-              icon={service.icon}
               index={index + 1}
               logos={service.logos}
               features={service.features}
