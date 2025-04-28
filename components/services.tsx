@@ -128,24 +128,24 @@ export default function Services() {
       logos: (
         <>
           <img
-            src="/targetVK.png" // Обновлено с /icons/Group.png
+            src="/targetVK.png"
             alt="VK"
-            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <img
-            src="/targetAV.png" // Обновлено с /icons/Group 7.png
+            src="/targetAV.png"
             alt="MT"
-            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <img
-            src="/targetTG.png" // Обновлено с /icons/nu-ikony.png
+            src="/targetTG.png"
             alt="TG"
-            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <img
-            src="/targetMT.png" // Обновлено с /icons/Clip-path-group.png
+            src="/targetMT.png"
             alt="OK"
-            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
         </>
       ),
@@ -162,14 +162,14 @@ export default function Services() {
       logos: (
         <>
           <img
-            src="/saitTD.png" // Убрано /icons/
+            src="/saitTD.png"
             alt="Sait TD"
-            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <img
-            src="/saitFG.png" // Убрано /icons/
+            src="/saitFG.png"
             alt="Sait FG"
-            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
         </>
       ),
@@ -186,14 +186,14 @@ export default function Services() {
       logos: (
         <>
           <img
-            src="/smmGPT.png" // Убрано /icons/
+            src="/smmGPT.png"
             alt="SMM GPT"
-            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
           <img
-            src="/smmPLANER.png" // Убрано /icons/
+            src="/smmPLANER.png"
             alt="SMM Planer"
-            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
         </>
       ),
@@ -210,9 +210,9 @@ export default function Services() {
       logos: (
         <>
           <img
-            src="/kontekstYA.png" // Убрано /icons/
+            src="/kontekstYA.png"
             alt="Kontekst YA"
-            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
         </>
       ),
@@ -229,9 +229,9 @@ export default function Services() {
       logos: (
         <>
           <img
-            src="/aiN8N.png" // Убрано /icons/
+            src="/aiN8N.png"
             alt="AI N8N"
-            className="max-w-12 max-h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
+            className="w-12 h-12 object-contain transition-transform duration-200 hover:scale-110 hover:rotate-3"
           />
         </>
       ),
