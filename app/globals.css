@@ -45,12 +45,12 @@ h6 {
   }
 }
 
-/* Добавляем стиль для курсора печатающегося текста */
+/* Стиль для курсора печатающегося текста */
 .typing-cursor {
   display: inline-block;
-  width: 3px;
+  width: 2px;
   height: 1em;
-  background-color: currentColor;
+  background-color: #02FFFF;
   margin-left: 2px;
   animation: blink 1s step-end infinite;
 }
