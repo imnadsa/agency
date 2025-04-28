@@ -76,7 +76,7 @@ function ServiceCard({ icon, title, description, index, logos, features, onClick
 
             {/* Логотипы */}
             {logos && (
-              <div className="flex flex-nowrap gap-3 mt-4 mb-2 overflow-x-auto">
+              <div className="flex flex-wrap gap-3 mt-4 mb-2">
                 {logos}
               </div>
             )}
@@ -129,40 +129,32 @@ export default function Services() {
       logos: (
         <>
           <Image
-            src="/targetVK.png"
-            alt="Target VK"
-            width={96}
-            height={96}
-            quality={100}
+            src="/icons/Group.png"
+            alt="VK"
+            width={50}
+            height={50}
             className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
-            style={{ imageRendering: "auto" }}
           />
           <Image
-            src="/targetAV.png"
-            alt="Target AV"
-            width={96}
-            height={96}
-            quality={100}
+            src="/icons/Group 7.png"
+            alt="MT"
+            width={50}
+            height={50}
             className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
-            style={{ imageRendering: "auto" }}
           />
           <Image
-            src="/targetTG.png"
-            alt="Target TG"
-            width={96}
-            height={96}
-            quality={100}
+            src="/icons/nu иконки.png"
+            alt="TG"
+            width={50}
+            height={50}
             className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
-            style={{ imageRendering: "auto" }}
           />
           <Image
-            src="/targetMT.png"
-            alt="Target MT"
-            width={96}
-            height={96}
-            quality={100}
+            src="/icons/Clip path group.png"
+            alt="OK"
+            width={50}
+            height={50}
             className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
-            style={{ imageRendering: "auto" }}
           />
         </>
       ),
@@ -179,22 +171,18 @@ export default function Services() {
       logos: (
         <>
           <Image
-            src="/saitTD.png"
+            src="/icons/saitTD.png"
             alt="Sait TD"
-            width={96}
-            height={96}
-            quality={100}
+            width={50}
+            height={50}
             className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
-            style={{ imageRendering: "auto" }}
           />
           <Image
-            src="/saitFG.png"
+            src="/icons/saitFG.png"
             alt="Sait FG"
-            width={96}
-            height={96}
-            quality={100}
+            width={50}
+            height={50}
             className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
-            style={{ imageRendering: "auto" }}
           />
         </>
       ),
@@ -211,22 +199,18 @@ export default function Services() {
       logos: (
         <>
           <Image
-            src="/smmGPT.png"
+            src="/icons/smmGPT.png"
             alt="SMM GPT"
-            width={96}
-            height={96}
-            quality={100}
+            width={50}
+            height={50}
             className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
-            style={{ imageRendering: "auto" }}
           />
           <Image
-            src="/smmPLANER.png"
+            src="/icons/smmPLANER.png"
             alt="SMM Planer"
-            width={96}
-            height={96}
-            quality={100}
+            width={50}
+            height={50}
             className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
-            style={{ imageRendering: "auto" }}
           />
         </>
       ),
@@ -243,13 +227,11 @@ export default function Services() {
       logos: (
         <>
           <Image
-            src="/kontekstYA.png"
+            src="/icons/kontekstYA.png"
             alt="Kontekst YA"
-            width={96}
-            height={96}
-            quality={100}
+            width={50}
+            height={50}
             className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
-            style={{ imageRendering: "auto" }}
           />
         </>
       ),
@@ -266,13 +248,11 @@ export default function Services() {
       logos: (
         <>
           <Image
-            src="/aiN8N.png"
+            src="/icons/aiN8N.png"
             alt="AI N8N"
-            width={96}
-            height={96}
-            quality={100}
+            width={50}
+            height={50}
             className="w-12 h-12 transition-transform duration-200 hover:scale-110 hover:rotate-3"
-            style={{ imageRendering: "auto" }}
           />
         </>
       ),
